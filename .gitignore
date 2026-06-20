@@ -1,0 +1,10 @@
+# Archivos de credenciales de seguridad (Privados)
+serviceAccountKey.json
+
+# Carpetas de dependencias de Node.js (Se generan automáticamente)
+node_modules/
+npm-debug.log*
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
