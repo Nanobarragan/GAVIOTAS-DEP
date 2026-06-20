@@ -7,51 +7,53 @@
     
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Gaviotas">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght=300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         .font-logo { font-family: 'Cinzel', serif; }
         .font-sublogo { font-family: 'Montserrat', sans-serif; letter-spacing: 0.4em; }
-        @media (max-width: 1024px) { body { padding-bottom: 80px; } }
+        /* Evitar rebote en iOS */
+        body { overscroll-behavior: none; }
+        .nav-button.active { color: #0891b2; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-20">
 
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-14 h-10 text-cyan-700 flex items-center justify-center">
-                    <svg viewBox="0 0 120 60" class="w-full h-full fill-current"><path d="M 10,22 C 32,10 48,12 55,34 C 57,38 58,41 60,45 C 62,41 63,38 65,34 C 72,12 88,10 110,22 C 92,26 80,38 67,52 C 64,55 62,56 60,56 C 58,56 56,55 53,52 C 40,38 28,26 10,22 Z" /></svg>
-                </div>
-                <div class="flex flex-col select-none">
-                    <div class="flex items-baseline gap-1">
-                        <span class="font-logo text-[11px] text-cyan-800">LAS</span>
-                        <span class="font-logo text-lg text-cyan-900 font-bold">GAVIOTAS</span>
-                    </div>
-                </div>
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="font-logo font-bold text-cyan-900">LAS GAVIOTAS</span>
             </div>
         </div>
     </header>
 
-    <div id="loading-screen" class="p-12 text-center text-slate-400 text-sm">Cargando datos...</div>
-
-    <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 py-4 space-y-6">
-        <div id="banner-notificaciones" class="hidden bg-cyan-50 border border-cyan-100 rounded-2xl p-4 flex items-center justify-between">
-            <p class="text-xs text-cyan-900">¿Recibir alertas de cortes?</p>
-            <button onclick="solicitarPermisoNotificaciones()" class="bg-cyan-700 text-white text-xs px-4 py-2 rounded-xl">Activar</button>
+    <main id="app-container" class="max-w-md mx-auto p-4">
+        <div id="loading-screen" class="text-center py-20 text-slate-400">
+            Cargando sistema...
         </div>
-        </div>
+        
+        <div id="vista-inicio" class="seccion hidden space-y-4">
+            <h2 class="text-lg font-semibold">Bienvenido</h2>
+            </div>
+    </main>
 
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t h-16 flex items-center justify-around px-2 z-50">
-        <button onclick="navegarA('inicio')" class="nav-button flex flex-col items-center text-slate-400"><i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px]">Inicio</span></button>
-        <button onclick="navegarA('estado')" class="nav-button flex flex-col items-center text-slate-400"><i data-lucide="activity" class="w-5 h-5"></i><span class="text-[10px]">Estado</span></button>
-        <button onclick="navegarA('anuncios')" class="nav-button flex flex-col items-center text-slate-400"><i data-lucide="megaphone" class="w-5 h-5"></i><span class="text-[10px]">Anuncios</span></button>
-    </div>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t h-16 flex items-center justify-around z-50">
+        <button onclick="navegarA('inicio')" class="nav-button flex flex-col items-center text-slate-400">
+            <i data-lucide="home" class="w-6 h-6"></i>
+        </button>
+        <button onclick="navegarA('estado')" class="nav-button flex flex-col items-center text-slate-400">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+        </button>
+        <button onclick="navegarA('anuncios')" class="nav-button flex flex-col items-center text-slate-400">
+            <i data-lucide="megaphone" class="w-6 h-6"></i>
+        </button>
+    </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -69,22 +71,32 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        
+
+        // Función global de navegación
         window.navegarA = function(id) {
-            document.querySelectorAll('.seccion-contenido').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.seccion').forEach(s => s.classList.add('hidden'));
             const target = document.getElementById('vista-' + id);
             if(target) target.classList.remove('hidden');
+            // Re-renderizar iconos al cambiar de vista
             if(window.lucide) lucide.createIcons();
         };
 
+        // Carga de datos
         onValue(ref(db, 'lasGaviotasData'), (snapshot) => {
+            const loading = document.getElementById("loading-screen");
+            if (loading) loading.classList.add("hidden");
+            
             const data = snapshot.val();
-            if (data) {
-                document.getElementById("loading-screen").classList.add("hidden");
-                // Aquí el renderizado corregido
-                if(window.lucide) lucide.createIcons();
-                navegarA('inicio');
+            // Lógica para renderizar tus datos aquí
+            
+            // Forzar renderizado de iconos tras la carga
+            if(window.lucide) {
+                lucide.createIcons();
             }
+            navegarA('inicio');
+        }, (error) => {
+            console.error("Error al conectar con Firebase:", error);
+            document.getElementById("loading-screen").innerText = "Error de conexión. Intente recargar.";
         });
     </script>
 </body>
