@@ -1,0 +1,74 @@
+<!-- admin.html - Panel de Control del Administrador -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Las Gaviotas</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-8">
+
+    <div class="max-w-xl mx-auto bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700">
+        <h1 class="text-2xl font-bold mb-6 text-center text-blue-400">🚨 Administración de Servicios de Las Gaviotas</h1>
+        
+        <!-- SECCIÓN AGUA -->
+        <div class="mb-8 p-4 bg-gray-750 border border-gray-700 rounded-xl">
+            <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">💧 Servicio de Agua</h2>
+            <div class="flex gap-4">
+                <button onclick="cambiarEstado('agua', 'Interrupción')" class="flex-1 bg-red-600 hover:bg-red-700 py-3 px-4 rounded-xl font-bold transition">
+                    Cortar Agua (🔴 Alerta)
+                </button>
+                <button onclick="cambiarEstado('agua', 'Normal')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-3 px-4 rounded-xl font-bold transition">
+                    Restablecer Agua (🟢 OK)
+                </button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN LUZ -->
+        <div class="p-4 bg-gray-750 border border-gray-700 rounded-xl">
+            <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">⚡ Servicio de Luz</h2>
+            <div class="flex gap-4">
+                <button onclick="cambiarEstado('luz', 'Interrupción')" class="flex-1 bg-rose-600 hover:bg-rose-700 py-3 px-4 rounded-xl font-bold transition">
+                    Cortar Luz (🔴 Alerta)
+                </button>
+                <button onclick="cambiarEstado('luz', 'Normal')" class="flex-1 bg-green-600 hover:bg-green-700 py-3 px-4 rounded-xl font-bold transition">
+                    Restablecer Luz (🟢 OK)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN DE TU CLIENTE FIREBASE 
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            databaseURL: "https://las-gaviotas-default-rtdb.firebaseio.com/",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Función que modifica Firebase al presionar cualquier botón
+        function cambiarEstado(servicio, nuevoEstado) {
+            database.ref('servicios/' + servicio).set({
+                estado: nuevoEstado,
+                ultimaActualizacion: new Date().toLocaleString('es-MX')
+            })
+            .then(() => {
+                alert(`Estado de ${servicio} cambiado a "${nuevoEstado}". ¡La alerta push se enviará automáticamente!`);
+            })
+            .catch((error) => {
+                console.error("Error al actualizar la base de datos: ", error);
+            });
+        }
+    </script>
+</body>
+</html>
