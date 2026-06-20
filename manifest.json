@@ -1,0 +1,16 @@
+{
+  "name": "Las Gaviotas",
+  "short_name": "Gaviotas",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e7490",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3104/3104847.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
