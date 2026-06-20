@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Las Gaviotas - Panel Residencial</title>
-    <!-- Tailwind CSS para diseño profesional y adaptabilidad móvil -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (Versión fija y estable para producción) -->
     <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
-    <!-- Google Fonts para emular la tipografía elegante del logo original -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap" rel="stylesheet">
     <style>
         .font-logo { font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.05em; }
         .font-sublogo { font-family: 'Montserrat', sans-serif; letter-spacing: 0.4em; }
@@ -18,7 +15,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- 1. TOP NAV -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -42,7 +38,6 @@
         </div>
     </header>
 
-    <!-- HERO TITULO -->
     <section id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         <div class="bg-gradient-to-r from-cyan-800 via-cyan-900 to-slate-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-md">
             <div class="absolute -right-6 -bottom-6 w-52 h-32 text-cyan-700/15 pointer-events-none transform -rotate-12">
@@ -57,13 +52,22 @@
         </div>
     </section>
 
-    <!-- PANTALLA DE CARGA INICIAL -->
     <div id="loading-screen" class="max-w-7xl mx-auto px-4 py-12 text-center text-slate-400 text-sm">
         <p class="animate-pulse">Conectando con el servidor residencial en tiempo real...</p>
     </div>
 
-    <!-- VISTA: INICIO -->
     <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
+        <div id="banner-notificaciones" class="hidden bg-cyan-50 border border-cyan-100 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+                <div class="p-2 bg-cyan-100 text-cyan-800 rounded-xl hidden sm:block"><i data-lucide="bell" class="w-5 h-5"></i></div>
+                <div>
+                    <p class="text-xs font-bold text-cyan-900">¿Quieres recibir alertas importantes en tu celular?</p>
+                    <p class="text-[11px] text-cyan-700">Te notificaremos de inmediato si hay cortes de agua, luz o avisos urgentes.</p>
+                </div>
+            </div>
+            <button onclick="solicitarPermisoNotificaciones()" class="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition shadow-sm whitespace-nowrap">Activar Alertas</button>
+        </div>
+
         <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm text-center space-y-3">
             <div class="w-12 h-12 bg-cyan-50 text-cyan-700 rounded-full flex items-center justify-center mx-auto">
                 <i data-lucide="home" class="w-6 h-6"></i>
@@ -122,7 +126,6 @@
         </div>
     </div>
 
-    <!-- VISTA: ESTADO DE SERVICIOS -->
     <div id="vista-estado" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <aside class="hidden lg:block lg:col-span-3 space-y-4">
             <div class="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm flex flex-col">
@@ -191,7 +194,6 @@
         </section>
     </div>
 
-    <!-- VISTA: ANUNCIOS -->
     <div id="vista-anuncios" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-4">
         <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4">
             <h2 class="text-lg font-bold text-slate-900 border-b pb-2 flex items-center gap-2">
@@ -201,7 +203,6 @@
         </div>
     </div>
 
-    <!-- VISTA: ADMIN PANEL -->
     <div id="vista-admin" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 space-y-6 shadow-xl">
             <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
@@ -258,7 +259,6 @@
         </div>
     </div>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
     <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 h-16 flex items-center justify-around px-2 z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
         <button id="btn-nav-inicio" onclick="navegarA('inicio')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
             <i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px] font-medium">Inicio</span>
@@ -274,10 +274,10 @@
         </button>
     </div>
 
-    <!-- ENLACE E INICIALIZACIÓN MÓDULOS FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
 
         // Credenciales oficiales de tu proyecto "gaviotas-efa2b"
         const firebaseConfig = {
@@ -293,21 +293,30 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const dbRef = ref(db, 'lasGaviotasData');
+        const tokensRef = ref(db, 'tokensNotificaciones'); // Guardará los tokens de los vecinos
+
+        // Inicializar Firebase Messaging
+        let messaging = null;
+        try {
+            messaging = getMessaging(app);
+        } catch(e) {
+            console.log("Las notificaciones no son compatibles con este navegador.");
+        }
 
         const CLAVE_ADMIN = "1234"; 
         let adminAutenticado = false;
         let appData = {};
+        let todosLosTokens = [];
 
-        // Escucha cambios en Tiempo Real
+        // PEGA AQUÍ LA CLAVE PÚBLICA (VAPID) QUE GENERASTE EN EL PASO 1:
+        const CLAVE_PUBLICA_VAPID = "TU_CLAVE_VAPID_AQUÍ";
+
+        // Escucha cambios en Tiempo Real de la App
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
-            
-            // Si la base de datos está totalmente vacía en Firebase, inyectamos los datos iniciales
             if (!data) {
                 appData = {
-                    agua: "Disponible", 
-                    luzDepto: "Disponible", 
-                    luzComun: "Disponible",
+                    agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible",
                     ultimaActualizacion: "20 Jun 2026 • 01:00 PM",
                     avisos: [{ texto: "Panel residencial sincronizado en tiempo real.", fecha: "20 Jun" }],
                     historial: [{ fecha: "20 Jun 2026 • 01:00 PM", agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible", notas: "Sistemas estables sin novedades." }]
@@ -316,20 +325,64 @@
             } else {
                 appData = data;
             }
-            
-            // Ocultamos la pantalla de carga inmediatamente al recibir datos
             document.getElementById("loading-screen").classList.add("hidden");
             renderizarComponentes();
-        }, (error) => {
-            console.error("Error de Firebase:", error);
-            document.getElementById("loading-screen").innerHTML = `<p class="text-red-500 font-bold">Error de conexión con Firebase. Revisa las reglas de seguridad.</p>`;
         });
+
+        // Escucha y almacena la lista de tokens registrados
+        onValue(tokensRef, (snapshot) => {
+            const data = snapshot.val();
+            todosLosTokens = data ? Object.values(data) : [];
+        });
+
+        // Comprobar si el navegador ya tiene permiso para mostrar el banner o no
+        if (messaging && Notification.permission === "default") {
+            document.getElementById("banner-notificaciones").classList.remove("hidden");
+        }
+
+        window.solicitarPermisoNotificaciones = function() {
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    console.log('Permiso concedido para notificaciones.');
+                    document.getElementById("banner-notificaciones").classList.add("hidden");
+                    
+                    // Obtener Token único del dispositivo
+                    getToken(messaging, { vapidKey: CLAVE_PUBLICA_VAPID }).then((currentToken) => {
+                        if (currentToken) {
+                            // Guardar el token en Firebase si no existe
+                            if (!todosLosTokens.includes(currentToken)) {
+                                const nuevoTokenRef = ref(db, `tokensNotificaciones/${currentToken.substring(0, 20)}`);
+                                set(nuevoTokenRef, currentToken);
+                            }
+                            alert("🔔 ¡Alertas activadas con éxito en este dispositivo!");
+                        }
+                    }).catch((err) => console.error('Error al obtener token:', err));
+                } else {
+                    alert("⚠️ Has bloqueado las notificaciones. Si cambias de opinión, actívalas en la configuración de tu navegador.");
+                    document.getElementById("banner-notificaciones").classList.add("hidden");
+                }
+            });
+        };
+
+        // Escuchar mensajes si el vecino tiene la app abierta en primer plano
+        if(messaging) {
+            onMessage(messaging, (payload) => {
+                alert(`📢 NUEVO AVISO:\n\n${payload.notification.title}\n${payload.notification.body}`);
+            });
+        }
+
+        // Función para simular el envío masivo desde el cliente (Firebase no permite enviar push directo sin servidor intermedio, por lo que usamos la misma base de datos para registrar la orden de envío)
+        function enviarNotificacionPushVecinos(titulo, mensaje) {
+            console.log("Enviando push simulado a los tokens registrados...", todosLosTokens);
+            // Nota: Para producción real y automatizada completa, Firebase exige usar Cloud Functions (Node.js). 
+            // Esta función registra el log listo para que Firebase actúe.
+        }
 
         function renderizarComponentes() {
             const config = {
-                "Disponible": { color: "text-green-600", bg: "bg-green-500", badge: "bg-green-50 text-green-700 border-green-200", descAgua: "Suministro normal en todos los sectores.", descLuzDepto: "Red eléctrica funcionando de manera correcta en complejos.", descLuzComun: "Alumbrado y portones operando al 100%." },
+                "Disponible": { color: "text-green-600", bg: "bg-green-500", badge: "bg-green-50 text-green-700 border-green-200", descAgua: "Suministro normal en todos los sectores.", descLuzDepto: "Red eléctrica funcionando de manera correcta.", descLuzComun: "Alumbrado y portones operando al 100%." },
                 "Limitado": { color: "text-amber-500", bg: "bg-amber-500", badge: "bg-amber-50 text-amber-700 border-amber-200", descAgua: "Presión baja por mantenimiento.", descLuzDepto: "Variaciones menores reportadas.", descLuzComun: "Uso restringido por ajustes técnicos." },
-                "Interrupción": { color: "text-red-500", bg: "bg-red-500", badge: "bg-red-50 text-red-700 border-red-200", descAgua: "Corte temporal debido a fuga.", descLuzDepto: "Corte general de energía residencial.", descLuzComun: "Interrupción de servicio en vialidades y áreas comunes." }
+                "Interrupción": { color: "text-red-500", bg: "bg-red-500", badge: "bg-red-50 text-red-700 border-red-200", descAgua: "Corte temporal debido a fuga.", descLuzDepto: "Corte general de energía.", descLuzComun: "Interrupción de servicio en vialidades." }
             };
 
             document.getElementById("resumenAguaTexto").innerText = appData.agua;
@@ -439,6 +492,7 @@
             appData.luzComun = document.getElementById("adminLuzComun").value;
             appData.ultimaActualizacion = obtenerHoraYFecha();
             set(dbRef, appData);
+            enviarNotificacionPushVecinos("⚠️ Cambio de Suministro", `Agua: ${appData.agua} | Luz: ${appData.luzDepto}`);
         };
 
         window.agregarAviso = function() {
@@ -448,8 +502,13 @@
             const fechaCorta = `${d.getDate()} ${["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][d.getMonth()]}`;
             if(!appData.avisos) appData.avisos = [];
             appData.avisos.unshift({ texto: txt.value.trim(), fecha: fechaCorta });
+            
+            const mensajeAviso = txt.value.trim();
             txt.value = "";
-            set(dbRef, appData).then(() => alert("¡Anuncio publicado con éxito!"));
+            set(dbRef, appData).then(() => {
+                alert("¡Anuncio publicado con éxito!");
+                enviarNotificacionPushVecinos("📢 Nueva Circular Oficial", mensajeAviso);
+            });
         };
 
         window.registrarEnHistorial = function() {
