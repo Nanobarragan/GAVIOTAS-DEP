@@ -2,10 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Las Gaviotas - Panel Residencial</title>
+    
+    <!-- Compatibilidad PWA e iOS -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Gaviotas">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap" rel="stylesheet">
     <style>
         .font-logo { font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.05em; }
@@ -15,6 +26,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
+    <!-- TOP NAV -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -38,6 +50,7 @@
         </div>
     </header>
 
+    <!-- HERO TITULO -->
     <section id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         <div class="bg-gradient-to-r from-cyan-800 via-cyan-900 to-slate-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-md">
             <div class="absolute -right-6 -bottom-6 w-52 h-32 text-cyan-700/15 pointer-events-none transform -rotate-12">
@@ -52,17 +65,21 @@
         </div>
     </section>
 
+    <!-- PANTALLA DE CARGA INICIAL -->
     <div id="loading-screen" class="max-w-7xl mx-auto px-4 py-12 text-center text-slate-400 text-sm">
         <p class="animate-pulse">Conectando con el servidor residencial en tiempo real...</p>
     </div>
 
+    <!-- VISTA: INICIO -->
     <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
+        
+        <!-- BANNER DE NOTIFICACIONES PUSH -->
         <div id="banner-notificaciones" class="hidden bg-cyan-50 border border-cyan-100 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
             <div class="flex items-center gap-3 text-center sm:text-left">
                 <div class="p-2 bg-cyan-100 text-cyan-800 rounded-xl hidden sm:block"><i data-lucide="bell" class="w-5 h-5"></i></div>
                 <div>
                     <p class="text-xs font-bold text-cyan-900">¿Quieres recibir alertas importantes en tu celular?</p>
-                    <p class="text-[11px] text-cyan-700">Te notificaremos de inmediato si hay cortes de agua, luz o avisos urgentes.</p>
+                    <p class="text-[11px] text-cyan-700">Te notificaremos de inmediato ante cortes de agua, luz o avisos urgentes.</p>
                 </div>
             </div>
             <button onclick="solicitarPermisoNotificaciones()" class="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition shadow-sm whitespace-nowrap">Activar Alertas</button>
@@ -126,6 +143,7 @@
         </div>
     </div>
 
+    <!-- VISTA: ESTADO DE SERVICIOS -->
     <div id="vista-estado" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <aside class="hidden lg:block lg:col-span-3 space-y-4">
             <div class="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm flex flex-col">
@@ -146,11 +164,11 @@
                     <div class="p-2 bg-amber-50 text-amber-500 rounded-xl"><i data-lucide="zap" class="w-4 h-4"></i></div>
                     <div><p class="text-[10px] text-slate-400 uppercase font-medium">Luz Deptos</p><p id="widgetLuzDepto" class="text-xs font-bold"></p></div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
+                <div class="bg-white p-4 rounded-2xl border border border-slate-100 shadow-sm flex items-center gap-3">
                     <div class="p-2 bg-orange-50 text-orange-500 rounded-xl"><i data-lucide="building" class="w-4 h-4"></i></div>
                     <div><p class="text-[10px] text-slate-400 uppercase font-medium">Luz Áreas C.</p><p id="widgetLuzComun" class="text-xs font-bold"></p></div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-2 col-span-2 sm:col-span-1">
+                <div class="bg-white p-4 rounded-2xl border border border-slate-100 shadow-sm flex items-center gap-2 col-span-2 sm:col-span-1">
                     <div class="p-2 bg-slate-50 text-slate-500 rounded-xl"><i data-lucide="clock" class="w-4 h-4"></i></div>
                     <div><p class="text-[10px] text-slate-400 uppercase font-medium">Actualizado</p><p id="widgetActualizacion" class="text-[10px] font-medium text-slate-600 truncate max-w-[120px]"></p></div>
                 </div>
@@ -194,6 +212,7 @@
         </section>
     </div>
 
+    <!-- VISTA: ANUNCIOS -->
     <div id="vista-anuncios" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-4">
         <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4">
             <h2 class="text-lg font-bold text-slate-900 border-b pb-2 flex items-center gap-2">
@@ -203,6 +222,7 @@
         </div>
     </div>
 
+    <!-- VISTA: ADMIN PANEL -->
     <div id="vista-admin" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 space-y-6 shadow-xl">
             <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
@@ -259,6 +279,7 @@
         </div>
     </div>
 
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
     <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 h-16 flex items-center justify-around px-2 z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
         <button id="btn-nav-inicio" onclick="navegarA('inicio')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
             <i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px] font-medium">Inicio</span>
@@ -274,12 +295,12 @@
         </button>
     </div>
 
+    <!-- SCRIPT DE LÓGICA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
         import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
 
-        // Credenciales oficiales de tu proyecto "gaviotas-efa2b"
         const firebaseConfig = {
             apiKey: "AIzaSyBUpbVlkqgr8-To72rS5hIeHJ_cpklknR8",
             authDomain: "gaviotas-efa2b.firebaseapp.com",
@@ -293,14 +314,14 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const dbRef = ref(db, 'lasGaviotasData');
-        const tokensRef = ref(db, 'tokensNotificaciones'); // Guardará los tokens de los vecinos
+        const tokensRef = ref(db, 'tokensNotificaciones');
 
-        // Inicializar Firebase Messaging
         let messaging = null;
         try {
+            // Inicializar mensajería solo si el navegador lo soporta (falla en Safari normal, pasa en modo PWA instalado)
             messaging = getMessaging(app);
         } catch(e) {
-            console.log("Las notificaciones no son compatibles con este navegador.");
+            console.log("Notificaciones nativas no soportadas en este navegador actual.");
         }
 
         const CLAVE_ADMIN = "1234"; 
@@ -308,74 +329,57 @@
         let appData = {};
         let todosLosTokens = [];
 
-        // PEGA AQUÍ LA CLAVE PÚBLICA (VAPID) QUE GENERASTE EN EL PASO 1:
-        const CLAVE_PUBLICA_VAPID = "TU_CLAVE_VAPID_AQUÍ";
+        const CLAVE_PUBLICA_VAPID = "BFyj_NwMerw4pwtrFk8QHit6owRWAv2yqwMekJeDDXB1pBS1oE8vlXbD3RrBke2RkoUxIR0SAB3mQPcY4xEn4wQ";
 
-        // Escucha cambios en Tiempo Real de la App
+        // Escucha la Base de Datos en Tiempo Real
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
-            if (!data) {
-                appData = {
-                    agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible",
-                    ultimaActualizacion: "20 Jun 2026 • 01:00 PM",
-                    avisos: [{ texto: "Panel residencial sincronizado en tiempo real.", fecha: "20 Jun" }],
-                    historial: [{ fecha: "20 Jun 2026 • 01:00 PM", agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible", notas: "Sistemas estables sin novedades." }]
-                };
-                set(dbRef, appData);
-            } else {
+            if (data) {
                 appData = data;
+                document.getElementById("loading-screen").classList.add("hidden");
+                renderizarComponentes();
             }
-            document.getElementById("loading-screen").classList.add("hidden");
-            renderizarComponentes();
         });
 
-        // Escucha y almacena la lista de tokens registrados
         onValue(tokensRef, (snapshot) => {
             const data = snapshot.val();
             todosLosTokens = data ? Object.values(data) : [];
         });
 
-        // Comprobar si el navegador ya tiene permiso para mostrar el banner o no
+        // Mostrar banner de suscripción si aplica
         if (messaging && Notification.permission === "default") {
             document.getElementById("banner-notificaciones").classList.remove("hidden");
         }
 
         window.solicitarPermisoNotificaciones = function() {
+            if (!messaging) {
+                alert("Para activar alertas en tu iPhone:\n1. Toca el botón compartir en Safari.\n2. Selecciona 'Agregar a inicio'.\n3. Abre la app desde el nuevo icono de tu pantalla.");
+                return;
+            }
+
             Notification.requestPermission().then((permission) => {
                 if (permission === 'granted') {
-                    console.log('Permiso concedido para notificaciones.');
                     document.getElementById("banner-notificaciones").classList.add("hidden");
-                    
-                    // Obtener Token único del dispositivo
                     getToken(messaging, { vapidKey: CLAVE_PUBLICA_VAPID }).then((currentToken) => {
                         if (currentToken) {
-                            // Guardar el token en Firebase si no existe
                             if (!todosLosTokens.includes(currentToken)) {
                                 const nuevoTokenRef = ref(db, `tokensNotificaciones/${currentToken.substring(0, 20)}`);
                                 set(nuevoTokenRef, currentToken);
                             }
-                            alert("🔔 ¡Alertas activadas con éxito en este dispositivo!");
+                            alert("🔔 ¡Dispositivo registrado con éxito para alertas residenciales!");
                         }
-                    }).catch((err) => console.error('Error al obtener token:', err));
+                    }).catch((err) => console.error('Error obteniendo token:', err));
                 } else {
-                    alert("⚠️ Has bloqueado las notificaciones. Si cambias de opinión, actívalas en la configuración de tu navegador.");
+                    alert("Notificaciones denegadas.");
                     document.getElementById("banner-notificaciones").classList.add("hidden");
                 }
             });
         };
 
-        // Escuchar mensajes si el vecino tiene la app abierta en primer plano
-        if(messaging) {
+        if (messaging) {
             onMessage(messaging, (payload) => {
-                alert(`📢 NUEVO AVISO:\n\n${payload.notification.title}\n${payload.notification.body}`);
+                alert(`📢 AVISO URGENTE:\n\n${payload.notification.title}\n${payload.notification.body}`);
             });
-        }
-
-        // Función para simular el envío masivo desde el cliente (Firebase no permite enviar push directo sin servidor intermedio, por lo que usamos la misma base de datos para registrar la orden de envío)
-        function enviarNotificacionPushVecinos(titulo, mensaje) {
-            console.log("Enviando push simulado a los tokens registrados...", todosLosTokens);
-            // Nota: Para producción real y automatizada completa, Firebase exige usar Cloud Functions (Node.js). 
-            // Esta función registra el log listo para que Firebase actúe.
         }
 
         function renderizarComponentes() {
@@ -385,34 +389,33 @@
                 "Interrupción": { color: "text-red-500", bg: "bg-red-500", badge: "bg-red-50 text-red-700 border-red-200", descAgua: "Corte temporal debido a fuga.", descLuzDepto: "Corte general de energía.", descLuzComun: "Interrupción de servicio en vialidades." }
             };
 
-            document.getElementById("resumenAguaTexto").innerText = appData.agua;
-            document.getElementById("resumenAguaPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.agua].bg}`;
-            document.getElementById("resumenLuzDeptoTexto").innerText = appData.luzDepto;
-            document.getElementById("resumenLuzDeptoPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzDepto].bg}`;
-            document.getElementById("resumenLuzComunTexto").innerText = appData.luzComun;
-            document.getElementById("resumenLuzComunPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzComun].bg}`;
+            document.getElementById("resumenAguaTexto").innerText = appData.agua || "Disponible";
+            document.getElementById("resumenAguaPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.agua || "Disponible"].bg}`;
+            document.getElementById("resumenLuzDeptoTexto").innerText = appData.luzDepto || "Disponible";
+            document.getElementById("resumenLuzDeptoPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzDepto || "Disponible"].bg}`;
+            document.getElementById("resumenLuzComunTexto").innerText = appData.luzComun || "Disponible";
+            document.getElementById("resumenLuzComunPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzComun || "Disponible"].bg}`;
 
-            document.getElementById("widgetAgua").className = `text-xs font-bold ${config[appData.agua].color}`;
-            document.getElementById("widgetAgua").innerText = appData.agua;
-            document.getElementById("widgetLuzDepto").className = `text-xs font-bold ${config[appData.luzDepto].color}`;
-            document.getElementById("widgetLuzDepto").innerText = appData.luzDepto;
-            document.getElementById("widgetLuzComun").className = `text-xs font-bold ${config[appData.luzComun].color}`;
-            document.getElementById("widgetLuzComun").innerText = appData.luzComun;
+            document.getElementById("widgetAgua").className = `text-xs font-bold ${config[appData.agua || "Disponible"].color}`;
+            document.getElementById("widgetAgua").innerText = appData.agua || "Disponible";
+            document.getElementById("widgetLuzDepto").className = `text-xs font-bold ${config[appData.luzDepto || "Disponible"].color}`;
+            document.getElementById("widgetLuzDepto").innerText = appData.luzDepto || "Disponible";
+            document.getElementById("widgetLuzComun").className = `text-xs font-bold ${config[appData.luzComun || "Disponible"].color}`;
+            document.getElementById("widgetLuzComun").innerText = appData.luzComun || "Disponible";
             
-            const horaWidget = appData.ultimaActualizacion ? appData.ultimaActualizacion.split('•')[1] : "01:00 PM";
-            document.getElementById("widgetActualizacion").innerText = horaWidget;
+            document.getElementById("widgetActualizacion").innerText = appData.ultimaActualizacion ? appData.ultimaActualizacion.split('•')[1] : "00:00";
 
-            document.getElementById("badgeCardAgua").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.agua].badge}`;
-            document.getElementById("badgeCardAgua").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.agua].bg}"></span> Agua: ${appData.agua}`;
-            document.getElementById("descCardAgua").innerText = config[appData.agua].descAgua;
+            document.getElementById("badgeCardAgua").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.agua || "Disponible"].badge}`;
+            document.getElementById("badgeCardAgua").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.agua || "Disponible"].bg}"></span> Agua: ${appData.agua || "Disponible"}`;
+            document.getElementById("descCardAgua").innerText = config[appData.agua || "Disponible"].descAgua;
 
-            document.getElementById("badgeCardLuzDepto").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzDepto].badge}`;
-            document.getElementById("badgeCardLuzDepto").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzDepto].bg}"></span> Luz Deptos: ${appData.luzDepto}`;
-            document.getElementById("descCardLuzDepto").innerText = config[appData.luzDepto].descLuzDepto;
+            document.getElementById("badgeCardLuzDepto").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzDepto || "Disponible"].badge}`;
+            document.getElementById("badgeCardLuzDepto").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzDepto || "Disponible"].bg}"></span> Luz Deptos: ${appData.luzDepto || "Disponible"}`;
+            document.getElementById("descCardLuzDepto").innerText = config[appData.luzDepto || "Disponible"].descLuzDepto;
 
-            document.getElementById("badgeCardLuzComun").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzComun].badge}`;
-            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzComun].bg}"></span> Luz Áreas C.: ${appData.luzComun}`;
-            document.getElementById("descCardLuzComun").innerText = config[appData.luzComun].descLuzComun;
+            document.getElementById("badgeCardLuzComun").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzComun || "Disponible"].badge}`;
+            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzComun || "Disponible"].bg}"></span> Luz Áreas C.: ${appData.luzComun || "Disponible"}`;
+            document.getElementById("descCardLuzComun").innerText = config[appData.luzComun || "Disponible"].descLuzComun;
 
             const listaAnuncios = document.getElementById("listaAvisosCompleta");
             listaAnuncios.innerHTML = "";
@@ -430,10 +433,9 @@
             tabla.innerHTML = "";
             if (appData.historial) {
                 appData.historial.forEach((h, idx) => {
-                    const fechaCorta = h.fecha ? h.fecha.split('•')[0] : "20 Jun 2026";
                     tabla.innerHTML += `
                         <tr class="${idx % 2 === 1 ? 'bg-slate-50/40' : ''}">
-                            <td class="p-3 font-medium text-slate-800">${fechaCorta}</td>
+                            <td class="p-3 font-medium text-slate-800">${h.fecha ? h.fecha.split('•')[0] : "20 Jun"}</td>
                             <td class="p-3 font-bold ${config[h.agua].color}">● ${h.agua}</td>
                             <td class="p-3 font-bold ${config[h.luzDepto].color}">● ${h.luzDepto}</td>
                             <td class="p-3 font-bold ${config[h.luzComun].color}">● ${h.luzComun}</td>
@@ -442,9 +444,9 @@
                 });
             }
 
-            document.getElementById("adminAgua").value = appData.agua;
-            document.getElementById("adminLuzDepto").value = appData.luzDepto;
-            document.getElementById("adminLuzComun").value = appData.luzComun;
+            document.getElementById("adminAgua").value = appData.agua || "Disponible";
+            document.getElementById("adminLuzDepto").value = appData.luzDepto || "Disponible";
+            document.getElementById("adminLuzComun").value = appData.luzComun || "Disponible";
 
             if(window.lucide) lucide.createIcons();
         }
@@ -492,7 +494,6 @@
             appData.luzComun = document.getElementById("adminLuzComun").value;
             appData.ultimaActualizacion = obtenerHoraYFecha();
             set(dbRef, appData);
-            enviarNotificacionPushVecinos("⚠️ Cambio de Suministro", `Agua: ${appData.agua} | Luz: ${appData.luzDepto}`);
         };
 
         window.agregarAviso = function() {
@@ -502,13 +503,8 @@
             const fechaCorta = `${d.getDate()} ${["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][d.getMonth()]}`;
             if(!appData.avisos) appData.avisos = [];
             appData.avisos.unshift({ texto: txt.value.trim(), fecha: fechaCorta });
-            
-            const mensajeAviso = txt.value.trim();
             txt.value = "";
-            set(dbRef, appData).then(() => {
-                alert("¡Anuncio publicado con éxito!");
-                enviarNotificacionPushVecinos("📢 Nueva Circular Oficial", mensajeAviso);
-            });
+            set(dbRef, appData).then(() => alert("¡Anuncio publicado con éxito!"));
         };
 
         window.registrarEnHistorial = function() {
