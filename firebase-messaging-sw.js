@@ -1,32 +1,50 @@
-// Importar los scripts necesarios de Firebase desde la CDN
-importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-app.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-messaging.js";
 
-// Configuración de Firebase para el Service Worker
+// 1. Reemplaza esto con el objeto de configuración de tu proyecto de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBUpbVlkqgr8-To72rS5hIeHJ_cpklknR8",
-    authDomain: "gaviotas-efa2b.firebaseapp.com",
-    databaseURL: "https://gaviotas-efa2b-default-rtdb.firebaseio.com",
-    projectId: "gaviotas-efa2b",
-    storageBucket: "gaviotas-efa2b.firebasestorage.app",
-    messagingSenderId: "483619094544",
-    appId: "1:483619094544:web:470213b77c84921ead0a95"
+  apiKey: "TU_API_KEY",
+  authDomain: "gaviotas-efa2b.firebaseapp.com",
+  databaseURL: "https://gaviotas-efa2b-default-rtdb.firebaseio.com",
+  projectId: "gaviotas-efa2b",
+  storageBucket: "gaviotas-efa2b.appspot.com",
+  messagingSenderId: "TU_MESSAGING_SENDER_ID",
+  appId: "TU_APP_ID"
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 
-// Inicializar Firebase Messaging
-const messaging = firebase.messaging();
+// 2. Solicitar permiso y obtener el Token de Notificación
+function solicitarPermisos() {
+  Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      console.log('Permiso de notificación concedido.');
+      
+      // Pasar tu clave VAPID exacta
+      getToken(messaging, { vapidKey: 'BFyj_NwMerw4pwtrFk8QHit6owRWAv2yqwMekJeDDXB1pBS1oE8vlXbD3RrBke2RkoUxIR0SAB3mQPcY4xEn4wQ' })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("Este es el token de este dispositivo (guárdalo para enviarle pruebas):", currentToken);
+            // Aquí podrías guardar este token en tu Realtime Database bajo un nodo "tokens" si quisieras enviar notificaciones masivas
+          } else {
+            console.log('No se pudo obtener el token de registro. Genera uno nuevo.');
+          }
+        }).catch((err) => {
+          console.log('Ocurrió un error al obtener el token: ', err);
+        });
+    } else {
+      console.log('No se otorgó permiso para notificar.');
+    }
+  });
+}
 
-// Configurar cómo se muestra la notificación cuando el teléfono la recibe en segundo plano
-messaging.onBackgroundMessage((payload) => {
-    console.log('[firebase-messaging-sw.js] Notificación recibida en segundo plano: ', payload);
-    
-    const notificationTitle = payload.notification.title || "Aviso Residencial";
-    const notificationOptions = {
-        body: payload.notification.body || "Hay una nueva actualización en el panel.",
-        icon: '/favicon.ico' // Puedes poner la ruta de un icono si tienes uno
-    };
+// Llamar a la función al cargar la página o al presionar un botón de "Activar Notificaciones"
+solicitarPermisos();
 
-    self.registration.showNotification(notificationTitle, notificationOptions);
+// 3. Escuchar notificaciones en PRIMER PLANO (cuando el usuario tiene la web abierta)
+onMessage(messaging, (payload) => {
+  console.log('Mensaje recibido en primer plano: ', payload);
+  // Aquí puedes mostrar una alerta personalizada o actualizar la interfaz
+  alert(`${payload.notification.title}: ${payload.notification.body}`);
 });
