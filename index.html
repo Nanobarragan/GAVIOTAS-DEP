@@ -42,7 +42,7 @@
             <p class="text-xs text-gray-300">Para activar alertas en tu iPhone, pulsa compartir <span class="bg-slate-700 px-1 rounded">⎋</span> en Safari y selecciona <b>"Agregar a Inicio"</b>.</p>
         </div>
 
-        <!-- BLOQUE DE SERVICIOS (Tu diseño original) -->
+        <!-- TU BLOQUE DE SERVICIOS ORIGINAL -->
         <div class="bg-slate-800 p-5 rounded-2xl shadow-md space-y-4">
             <!-- Agua -->
             <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -120,7 +120,7 @@
             messaging = firebase.messaging();
         }
 
-        // Mostrar u ocultar secciones según el entorno del iPhone/Android
+        // Mostrar u ocultar secciones según el entorno del iPhone/Android sin romper la carga visual
         if (esIOS && !modoPWA) {
             document.getElementById('avisoIphoneSafari').classList.remove('hidden');
         } else {
