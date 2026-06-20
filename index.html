@@ -89,7 +89,7 @@
             <div class="w-12 h-12 bg-cyan-50 text-cyan-700 rounded-full flex items-center justify-center mx-auto">
                 <i data-lucide="home" class="w-6 h-6"></i>
             </div>
-            <h2 class="text-lg font-bold text-slate-900">¡Bienvenido a tu Panel Residencial!</h2>
+            <h2 class="text-lg font-bold text-slate-900">¡Bienvenido a tu Panel Residential!</h2>
             <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
                 Revisa el estado de los servicios del complejo y las últimas circulares publicadas por la administración.
             </p>
@@ -414,7 +414,7 @@
             document.getElementById("descCardLuzDepto").innerText = config[appData.luzDepto || "Disponible"].descLuzDepto;
 
             document.getElementById("badgeCardLuzComun").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzComun || "Disponible"].badge}`;
-            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzComun || "Disponible"].bg}"></span> Luz Áreas C.: ${appData.luzComun || "Disponible"}`;
+            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[h.luzComun || "Disponible"].bg}"></span> Luz Áreas C.: ${appData.luzComun || "Disponible"}`;
             document.getElementById("descCardLuzComun").innerText = config[appData.luzComun || "Disponible"].descLuzComun;
 
             const listaAnuncios = document.getElementById("listaAvisosCompleta");
@@ -466,62 +466,13 @@
             const secDOM = document.getElementById(`vista-${idSeccion}`);
             if(secDOM) secDOM.classList.remove('hidden');
             
-            const hero = document.getElementById('hero-section');
-            if(idSeccion === 'admin') hero.classList.add('hidden'); else hero.classList.remove('hidden');
-
-            document.querySelectorAll('.nav-button').forEach(btn => {
-                btn.classList.remove('text-cyan-700', 'font-bold', 'scale-105');
-                btn.classList.add('text-slate-400', 'font-medium');
-            });
-            const botonActivo = document.getElementById(`btn-nav-${idSeccion}`);
-            if(botonActivo) {
-                botonActivo.classList.remove('text-slate-400', 'font-medium');
-                botonActivo.classList.add('text-cyan-700', 'font-bold', 'scale-105');
-            }
+            // Estilos de la barra inferior de navegación activa
+            document.querySelectorAll('.nav-button').forEach(btn => btn.classList.replace('text-cyan-700', 'text-slate-400'));
+            const btnActivo = document.getElementById(`btn-nav-${idSeccion}`);
+            if(btnActivo) btnActivo.classList.replace('text-slate-400', 'text-cyan-700');
         };
 
-        function obtenerHoraYFecha() {
-            const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-            const d = new Date();
-            let hr = d.getHours(); const min = String(d.getMinutes()).padStart(2, '0');
-            const ampm = hr >= 12 ? 'PM' : 'AM'; hr = hr % 12 || 12;
-            return `${d.getDate()} ${meses[d.getMonth()]} • ${hr}:${min} ${ampm}`;
-        }
-
-        window.actualizarDesdeAdmin = function() {
-            appData.agua = document.getElementById("adminAgua").value;
-            appData.luzDepto = document.getElementById("adminLuzDepto").value;
-            appData.luzComun = document.getElementById("adminLuzComun").value;
-            appData.ultimaActualizacion = obtenerHoraYFecha();
-            set(dbRef, appData);
-        };
-
-        window.agregarAviso = function() {
-            const txt = document.getElementById("nuevoAvisoTexto");
-            if (!txt.value.trim()) return alert("El mensaje no puede estar vacío.");
-            const d = new Date();
-            const fechaCorta = `${d.getDate()} ${["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][d.getMonth()]}`;
-            if(!appData.avisos) appData.avisos = [];
-            appData.avisos.unshift({ texto: txt.value.trim(), fecha: fechaCorta });
-            txt.value = "";
-            set(dbRef, appData).then(() => alert("¡Anuncio publicado con éxito!"));
-        };
-
-        window.registrarEnHistorial = function() {
-            const notas = document.getElementById("histNotas");
-            if (!notas.value.trim()) return alert("Agrega detalles.");
-            if(!appData.historial) appData.historial = [];
-            appData.historial.unshift({
-                fecha: obtenerHoraYFecha(),
-                agua: appData.agua,
-                luzDepto: appData.luzDepto,
-                luzComun: appData.luzComun,
-                notes: notas.value.trim()
-            });
-            notas.value = "";
-            set(dbRef, appData).then(() => alert("Variación guardada en el historial."));
-        };
-
+        // Forzar el renderizado de la primera sección al iniciar por defecto
         navegarA('inicio');
     </script>
 </body>
