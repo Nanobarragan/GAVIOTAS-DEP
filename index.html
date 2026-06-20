@@ -14,22 +14,13 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen p-6 font-sans">
 
-    <!-- BANNER DE INSTALACIÓN PARA ANDROID -->
-    <div id="bannerInstalacion" class="hidden fixed bottom-4 left-4 right-4 bg-blue-600 text-white p-4 rounded-xl shadow-lg flex justify-between items-center z-50">
-        <div>
-            <p class="text-sm font-bold">Instalar App Las Gaviotas</p>
-            <p class="text-xs text-blue-100">Recibe alertas de agua y luz en tu celular.</p>
-        </div>
-        <button id="btnInstalarAndroid" class="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-lg">Instalar</button>
-    </div>
-
     <div class="max-w-md mx-auto space-y-6">
         <div class="text-center">
             <h1 class="text-xl font-bold">Residencial Las Gaviotas</h1>
             <p class="text-xs text-gray-400">Estado de servicios en tiempo real</p>
         </div>
 
-        <!-- BOTÓN DE NOTIFICACIONES (SÓLO SI ES COMPATIBLE) -->
+        <!-- BOTÓN DE NOTIFICACIONES ORIGINAL -->
         <div id="zonaAlertas" class="hidden bg-slate-800 p-4 rounded-xl text-center space-y-2">
             <p class="text-xs text-gray-300">Activa las notificaciones para recibir alertas de cortes al instante.</p>
             <button onclick="solicitarPermisoNotificaciones()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg text-xs transition">
@@ -37,12 +28,7 @@
             </button>
         </div>
 
-        <!-- AVISO SUTIL SÓLO PARA IPHONE SAFARI -->
-        <div id="avisoIphoneSafari" class="hidden bg-slate-800 p-4 rounded-xl text-center border border-dashed border-gray-600">
-            <p class="text-xs text-gray-300">Para activar alertas en tu iPhone, pulsa compartir <span class="bg-slate-700 px-1 rounded">⎋</span> en Safari y selecciona <b>"Agregar a Inicio"</b>.</p>
-        </div>
-
-        <!-- TU BLOQUE DE SERVICIOS ORIGINAL -->
+        <!-- TU BLOQUE DE SERVICIOS ORIGINAL INTACTO -->
         <div class="bg-slate-800 p-5 rounded-2xl shadow-md space-y-4">
             <!-- Agua -->
             <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -111,22 +97,15 @@
             }
         }
 
-        // 2. DETECTOR INTELIGENTE DE DISPOSITIVOS
-        const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const modoPWA = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
-
+        // 2. COMPATIBILIDAD INTELIGENTE (Previene que la pantalla se quede en blanco en Safari)
         let messaging = null;
         if (firebase.messaging.isSupported()) {
             messaging = firebase.messaging();
         }
 
-        // Mostrar u ocultar secciones según el entorno del iPhone/Android sin romper la carga visual
-        if (esIOS && !modoPWA) {
-            document.getElementById('avisoIphoneSafari').classList.remove('hidden');
-        } else {
-            if (messaging && Notification.permission !== 'granted') {
-                document.getElementById('zonaAlertas').classList.remove('hidden');
-            }
+        // El botón de alertas sólo se mostrará si el dispositivo soporta notificaciones de forma nativa
+        if (messaging && Notification.permission !== 'granted') {
+            document.getElementById('zonaAlertas').classList.remove('hidden');
         }
 
         // 3. REGISTRO DEL SERVICE WORKER (Para Android y PWA)
@@ -137,28 +116,10 @@
             }).catch(err => console.log('SW Activo.'));
         }
 
-        // 4. BANNER DE INSTALACIÓN (EXCLUSIVO ANDROID)
-        let eventoInstalacionAndroid;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            eventoInstalacionAndroid = e;
-            document.getElementById('bannerInstalacion').classList.remove('hidden');
-        });
-
-        document.getElementById('btnInstalarAndroid').addEventListener('click', async () => {
-            if (eventoInstalacionAndroid) {
-                eventoInstalacionAndroid.prompt();
-                const { outcome } = await eventoInstalacionAndroid.userChoice;
-                if (outcome === 'accepted') {
-                    document.getElementById('bannerInstalacion').classList.add('hidden');
-                }
-            }
-        });
-
-        // 5. OBTENER TOKEN DE NOTIFICACIONES
+        // 4. OBTENER TOKEN DE NOTIFICACIONES (Se ejecuta si presionan el botón)
         window.solicitarPermisoNotificaciones = function() {
             if (!messaging) {
-                alert("Las notificaciones no son soportadas en este navegador actual.");
+                alert("Las notificaciones no son soportadas en este navegador actual. Si usas iPhone, recuerda guardarlo en tu pantalla de inicio primero.");
                 return;
             }
 
