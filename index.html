@@ -6,102 +6,70 @@
     <title>Las Gaviotas - Estado de Servicios</title>
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
     
-    <!-- Configuración para iOS (Icono y soporte de App) -->
+    <!-- Soporte para PWA en iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link class="apple-touch-icon" rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-4 sm:p-8 font-sans">
+<body class="bg-slate-900 text-white min-h-screen p-6 font-sans">
 
-    <!-- BANNER DE INSTALACIÓN AUTOMÁTICA (EXCLUSIVO ANDROID) -->
-    <div id="bannerInstalacion" class="hidden fixed bottom-4 left-4 right-4 bg-cyan-600 text-white p-4 rounded-2xl shadow-2xl border border-cyan-500 flex justify-between items-center z-50">
-        <div class="flex items-center gap-3">
-            <i data-lucide="download-cloud" class="w-6 h-6"></i>
-            <div>
-                <p class="text-xs font-bold">Instala la App de Las Gaviotas</p>
-                <p class="text-[10px] text-cyan-100">Recibe alertas de agua y luz al instante.</p>
-            </div>
+    <!-- BANNER DE INSTALACIÓN PARA ANDROID -->
+    <div id="bannerInstalacion" class="hidden fixed bottom-4 left-4 right-4 bg-blue-600 text-white p-4 rounded-xl shadow-lg flex justify-between items-center z-50">
+        <div>
+            <p class="text-sm font-bold">Instalar App Las Gaviotas</p>
+            <p class="text-xs text-blue-100">Recibe alertas de agua y luz en tu celular.</p>
         </div>
-        <button id="btnInstalarAndroid" class="bg-white text-cyan-700 font-bold text-xs px-4 py-2 rounded-xl shadow-md">Instalar</button>
+        <button id="btnInstalarAndroid" class="bg-white text-blue-600 font-bold text-xs px-3 py-2 rounded-lg">Instalar</button>
     </div>
 
-    <!-- PÁGINA PRINCIPAL -->
     <div class="max-w-md mx-auto space-y-6">
-        <!-- Encabezado -->
-        <div class="text-center py-4">
-            <h1 class="text-2xl font-bold text-cyan-400">🏡 Residencial Las Gaviotas</h1>
-            <p class="text-xs text-slate-400 mt-1">Estado de los servicios en tiempo real</p>
+        <div class="text-center">
+            <h1 class="text-xl font-bold">Residencial Las Gaviotas</h1>
+            <p class="text-xs text-gray-400">Estado de servicios en tiempo real</p>
         </div>
 
-        <!-- INDICACIÓN DE ALERTAS (SÓLO APARECE SI EL DISPOSITIVO ES COMPATIBLE) -->
-        <div id="zonaAlertas" class="hidden bg-slate-800 border border-slate-700 p-4 rounded-2xl text-center space-y-3 shadow-lg">
-            <p class="text-xs text-slate-300">¿Quieres recibir alertas importantes de cortes en tu celular?</p>
-            <button onclick="solicitarPermisoNotificaciones()" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-2.5 rounded-xl text-xs transition">
-                🔔 Activar Alertas en mi Celular
+        <!-- BOTÓN DE NOTIFICACIONES (SÓLO SI ES COMPATIBLE) -->
+        <div id="zonaAlertas" class="hidden bg-slate-800 p-4 rounded-xl text-center space-y-2">
+            <p class="text-xs text-gray-300">Activa las notificaciones para recibir alertas de cortes al instante.</p>
+            <button onclick="solicitarPermisoNotificaciones()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg text-xs transition">
+                Activar Alertas
             </button>
         </div>
 
-        <!-- RECOMENDACIÓN EXCLUSIVA PARA IPHONE EN SAFARI -->
-        <div id="avisoIphoneSafari" class="hidden bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl text-center space-y-2 shadow-lg">
-            <p class="text-xs text-amber-400 font-semibold flex items-center justify-center gap-1">
-                <i data-lucide="info" class="w-4 h-4"></i> Nota para usuarios de iPhone:
-            </p>
-            <p class="text-[11px] text-slate-300">Para poder activar las **notificaciones push en tiempo real**, pulsa el botón de compartir <span class="bg-slate-700 px-1 rounded">⎋</span> de Safari y selecciona **"Agregar a Inicio"**.</p>
+        <!-- AVISO SUTIL SÓLO PARA IPHONE SAFARI -->
+        <div id="avisoIphoneSafari" class="hidden bg-slate-800 p-4 rounded-xl text-center border border-dashed border-gray-600">
+            <p class="text-xs text-gray-300">Para activar alertas en tu iPhone, pulsa compartir <span class="bg-slate-700 px-1 rounded">⎋</span> en Safari y selecciona <b>"Agregar a Inicio"</b>.</p>
         </div>
 
-        <!-- MONITOR DE SUMINISTROS (Esto SIEMPRE se verá en cualquier cel) -->
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 shadow-xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Servicio</span>
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Estado</span>
-            </div>
-
+        <!-- BLOQUE DE SERVICIOS (Tu diseño original) -->
+        <div class="bg-slate-800 p-5 rounded-2xl shadow-md space-y-4">
             <!-- Agua -->
-            <div class="flex justify-between items-center py-2">
-                <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl"><i data-lucide="droplet"></i></div>
-                    <div>
-                        <p class="text-sm font-semibold">Agua Potable</p>
-                        <p class="text-[10px] text-slate-400">Red General</p>
-                    </div>
-                </div>
-                <span id="statusAgua" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <span class="text-sm font-medium">Agua Potable</span>
+                <span id="statusAgua" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-700 text-gray-300">Cargando...</span>
             </div>
 
             <!-- Luz Deptos -->
-            <div class="flex justify-between items-center py-2">
-                <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl"><i data-lucide="bolt"></i></div>
-                    <div>
-                        <p class="text-sm font-semibold">Luz Departamentos</p>
-                        <p class="text-[10px] text-slate-400">Conexión CFE</p>
-                    </div>
-                </div>
-                <span id="statusLuzDepto" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <span class="text-sm font-medium">Luz Departamentos</span>
+                <span id="statusLuzDepto" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-700 text-gray-300">Cargando...</span>
             </div>
 
             <!-- Luz Común -->
-            <div class="flex justify-between items-center py-2">
-                <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl"><i data-lucide="lightbulb"></i></div>
-                    <div>
-                        <p class="text-sm font-semibold">Luz Áreas Comunes</p>
-                        <p class="text-[10px] text-slate-400">Portones y Vialidades</p>
-                    </div>
-                </div>
-                <span id="statusLuzComun" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-medium">Luz Áreas Comunes</span>
+                <span id="statusLuzComun" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-700 text-gray-300">Cargando...</span>
             </div>
+        </div>
 
-            <!-- Última actualización -->
-            <div class="text-center pt-2 border-t border-slate-700 text-[10px] text-slate-500">
-                Última actualización: <span id="lblActualizacion">--/-- --:--</span>
-            </div>
+        <!-- Última Actualización -->
+        <div class="text-center text-[11px] text-gray-500">
+            Última actualización: <span id="lblActualizacion">--/-- --:--</span>
         </div>
     </div>
 
-    <!-- Firebase Core JS SDK (Carga Segura) -->
+    <!-- Firebase SDK v10 (Compat Mode) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
@@ -119,63 +87,57 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        
-        // 1. LEER LOS DATOS DE FIREBASE (Esto corre inmediatamente en CUALQUIER celular)
+
+        // 1. CARGA DE DATOS INMEDIATA (Funciona siempre en cualquier navegador)
         database.ref('lasGaviotasData').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                 pintarEstado("statusAgua", data.agua);
-                 pintarEstado("statusLuzDepto", data.luzDepto);
-                 pintarEstado("statusLuzComun", data.luzComun);
-                 document.getElementById("lblActualizacion").innerText = data.ultimaActualizacion || "Reciente";
+                actualizarEtiqueta("statusAgua", data.agua);
+                actualizarEtiqueta("statusLuzDepto", data.luzDepto);
+                actualizarEtiqueta("statusLuzComun", data.luzComun);
+                document.getElementById("lblActualizacion").innerText = data.ultimaActualizacion || "Reciente";
             }
         });
 
-        function pintarEstado(elementId, estado) {
-            const el = document.getElementById(elementId);
+        function actualizarEtiqueta(id, estado) {
+            const el = document.getElementById(id);
             el.innerText = estado || "Disponible";
             if (estado === "Interrupción") {
-                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30";
+                el.className = "text-xs font-bold px-3 py-1 rounded-full bg-red-600 text-white";
             } else if (estado === "Limitado") {
-                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30";
+                el.className = "text-xs font-bold px-3 py-1 rounded-full bg-amber-500 text-slate-900";
             } else {
-                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                el.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-600 text-white";
             }
         }
 
-        // 2. FILTRAR DISPOSITIVO INTELIGENTE (Previene bloqueo en iOS Safari)
+        // 2. DETECTOR INTELIGENTE DE DISPOSITIVOS
         const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const modoPWA = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
 
         let messaging = null;
-
-        // Intentar activar las funciones de mensajería SOLO si es compatible o es Android / PWA instalada
         if (firebase.messaging.isSupported()) {
             messaging = firebase.messaging();
         }
 
-        // Configuración visual según el sistema
+        // Mostrar u ocultar secciones según el entorno del iPhone/Android
         if (esIOS && !modoPWA) {
-            // Si es un iPhone pero entró desde Safari normal, le mostramos el texto informativo de ayuda
             document.getElementById('avisoIphoneSafari').classList.remove('hidden');
         } else {
-            // Si es Android, o ya es el iPhone instalado como App, evaluamos mostrar el botón de alertas push
             if (messaging && Notification.permission !== 'granted') {
                 document.getElementById('zonaAlertas').classList.remove('hidden');
             }
         }
 
-        // 3. REGISTRO DEL SERVICE WORKER (Para Android y PWAs nativas)
+        // 3. REGISTRO DEL SERVICE WORKER (Para Android y PWA)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/firebase-messaging-sw.js')
             .then((registration) => {
-                if (messaging) {
-                    messaging.useServiceWorker(registration);
-                }
-            }).catch(err => console.log('Service Worker pasivo cargado.'));
+                if (messaging) messaging.useServiceWorker(registration);
+            }).catch(err => console.log('SW Activo.'));
         }
 
-        // 4. DETECTOR DE INSTALACIÓN AUTOMÁTICA EN ANDROID
+        // 4. BANNER DE INSTALACIÓN (EXCLUSIVO ANDROID)
         let eventoInstalacionAndroid;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -193,10 +155,10 @@
             }
         });
 
-        // 5. SOLICITUD DE ALERTAS PUSH (Solo se dispara si ejecutan el botón)
+        // 5. OBTENER TOKEN DE NOTIFICACIONES
         window.solicitarPermisoNotificaciones = function() {
             if (!messaging) {
-                alert("Las notificaciones no se pueden activar en este modo. Si usas iPhone, recuerda guardarlo en tu pantalla de inicio primero.");
+                alert("Las notificaciones no son soportadas en este navegador actual.");
                 return;
             }
 
@@ -207,15 +169,13 @@
                         if (currentToken) {
                             database.ref('tokensNotificaciones').push(currentToken).then(() => {
                                 document.getElementById('zonaAlertas').classList.add('hidden');
-                                alert("¡Notificaciones configuradas con éxito!");
+                                alert("¡Alertas activadas correctamente!");
                             });
                         }
                     }).catch(err => console.error(err));
                 }
             });
         };
-
-        if (window.lucide) lucide.createIcons();
     </script>
 </body>
 </html>
