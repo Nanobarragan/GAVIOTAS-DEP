@@ -4,37 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Las Gaviotas - Panel Residencial</title>
-    <!-- Tailwind CSS para diseño profesional y adaptabilidad móvil -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (Versión fija y estable para producción) -->
     <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
-    <!-- Google Fonts para emular la tipografía elegante del logo original -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Estilos para igualar la tipografía del logo en image_2.png */
         .font-logo { font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.05em; }
         .font-sublogo { font-family: 'Montserrat', sans-serif; letter-spacing: 0.4em; }
-        
-        @media (max-width: 1024px) {
-            body { padding-bottom: 80px; }
-        }
+        @media (max-width: 1024px) { body { padding-bottom: 80px; } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- 1. TOP NAV (Con réplica fiel del logo de image_2.png) -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            
-            <!-- CONTENEDOR DEL LOGO VECTORIZADO FIEL A LA IMAGEN -->
             <div class="flex items-center gap-3">
-                <!-- SVG Rediseñado con la curva exacta de la gaviota en image_2.png -->
                 <div class="w-14 h-10 text-cyan-700 flex items-center justify-center">
                     <svg viewBox="0 0 120 60" class="w-full h-full fill-current">
                         <path d="M 10,22 C 32,10 48,12 55,34 C 57,38 58,41 60,45 C 62,41 63,38 65,34 C 72,12 88,10 110,22 C 92,26 80,38 67,52 C 64,55 62,56 60,56 C 58,56 56,55 53,52 C 40,38 28,26 10,22 Z" />
                     </svg>
                 </div>
-                <!-- Bloque de texto con estructura idéntica al original -->
                 <div class="flex flex-col select-none">
                     <div class="flex items-baseline gap-1">
                         <span class="font-logo text-[11px] text-cyan-800 leading-none">LAS</span>
@@ -44,24 +32,19 @@
                     <span class="font-sublogo text-[7px] sm:text-[8px] text-cyan-600 font-medium uppercase leading-none pl-0.5">PRIVADA</span>
                 </div>
             </div>
-            
-            <!-- Botón de administración rápido para PC -->
             <button onclick="solicitarAccesoAdmin()" class="hidden lg:flex bg-slate-100 hover:bg-cyan-50 hover:text-cyan-700 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition items-center gap-1.5 shadow-sm">
                 <i data-lucide="lock" class="w-3.5 h-3.5"></i> Modo Admin
             </button>
         </div>
     </header>
 
-    <!-- HERO TITULO (Con gaviota de fondo adaptada) -->
     <section id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         <div class="bg-gradient-to-r from-cyan-800 via-cyan-900 to-slate-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-md">
-            <!-- Gaviota fiel de fondo decorativa gigante -->
             <div class="absolute -right-6 -bottom-6 w-52 h-32 text-cyan-700/15 pointer-events-none transform -rotate-12">
                 <svg viewBox="0 0 120 60" class="w-full h-full fill-current">
                     <path d="M 10,22 C 32,10 48,12 55,34 C 57,38 58,41 60,45 C 62,41 63,38 65,34 C 72,12 88,10 110,22 C 92,26 80,38 67,52 C 64,55 62,56 60,56 C 58,56 56,55 53,52 C 40,38 28,26 10,22 Z" />
                 </svg>
             </div>
-            
             <div class="relative z-10 space-y-1">
                 <h1 class="font-logo text-xl sm:text-3xl font-bold tracking-wide text-cyan-100">Las Gaviotas</h1>
                 <p class="text-xs text-slate-300 font-light tracking-wide">Panel informativo de la comunidad residencial.</p>
@@ -69,12 +52,11 @@
         </div>
     </section>
 
+    <div id="loading-screen" class="max-w-7xl mx-auto px-4 py-12 text-center text-slate-400 text-sm">
+        <p class="animate-pulse">Conectando con el servidor residencial en tiempo real...</p>
+    </div>
 
-    <!-- ================= SECCIONES DE CONTENIDO DINÁMICO ================= -->
-
-    <!-- VISTA: INICIO -->
-    <div id="vista-inicio" class="seccion-contenido max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
-        <!-- Tarjeta de Bienvenida -->
+    <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm text-center space-y-3">
             <div class="w-12 h-12 bg-cyan-50 text-cyan-700 rounded-full flex items-center justify-center mx-auto">
                 <i data-lucide="home" class="w-6 h-6"></i>
@@ -85,70 +67,55 @@
             </p>
         </div>
 
-        <!-- RESUMEN VISUAL DE LOS ESTADOS -->
         <div class="space-y-3">
             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 pl-1">Resumen del Complejo</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                
-                <!-- Estado Agua -->
                 <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-cyan-200 transition">
                     <div class="flex items-center gap-4">
-                        <div class="p-3 bg-cyan-50 text-cyan-700 rounded-xl">
-                            <i data-lucide="droplet" class="w-6 h-6"></i>
-                        </div>
+                        <div class="p-3 bg-cyan-50 text-cyan-700 rounded-xl"><i data-lucide="droplet" class="w-6 h-6"></i></div>
                         <div>
                             <p class="text-xs text-slate-400 font-medium">Servicio de Agua</p>
-                            <p id="resumenAguaTexto" class="text-base font-bold text-slate-800"></p>
+                            <p id="resumenAguaTexto" class="text-base font-bold text-slate-800">Cargando...</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span id="resumenAguaPunto" class="w-3 h-3 rounded-full animate-pulse"></span>
+                        <span id="resumenAguaPunto" class="w-3 h-3 rounded-full"></span>
                         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
                     </div>
                 </div>
 
-                <!-- Estado Luz Departamentos -->
                 <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-amber-200 transition">
                     <div class="flex items-center gap-4">
-                        <div class="p-3 bg-amber-50 text-amber-500 rounded-xl">
-                            <i data-lucide="zap" class="w-6 h-6"></i>
-                        </div>
+                        <div class="p-3 bg-amber-50 text-amber-500 rounded-xl"><i data-lucide="zap" class="w-6 h-6"></i></div>
                         <div>
                             <p class="text-xs text-slate-400 font-medium">Luz Departamentos</p>
-                            <p id="resumenLuzDeptoTexto" class="text-base font-bold text-slate-800"></p>
+                            <p id="resumenLuzDeptoTexto" class="text-base font-bold text-slate-800">Cargando...</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span id="resumenLuzDeptoPunto" class="w-3 h-3 rounded-full animate-pulse"></span>
+                        <span id="resumenLuzDeptoPunto" class="w-3 h-3 rounded-full"></span>
                         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
                     </div>
                 </div>
 
-                <!-- Estado Luz Áreas Comunes -->
                 <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-amber-200 transition">
                     <div class="flex items-center gap-4">
-                        <div class="p-3 bg-orange-50 text-orange-500 rounded-xl">
-                            <i data-lucide="building" class="w-6 h-6"></i>
-                        </div>
+                        <div class="p-3 bg-orange-50 text-orange-500 rounded-xl"><i data-lucide="building" class="w-6 h-6"></i></div>
                         <div>
                             <p class="text-xs text-slate-400 font-medium">Luz Áreas Comunes</p>
-                            <p id="resumenLuzComunTexto" class="text-base font-bold text-slate-800"></p>
+                            <p id="resumenLuzComunTexto" class="text-base font-bold text-slate-800">Cargando...</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span id="resumenLuzComunPunto" class="w-3 h-3 rounded-full animate-pulse"></span>
+                        <span id="resumenLuzComunPunto" class="w-3 h-3 rounded-full"></span>
                         <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- VISTA: ESTADO DE SERVICIOS -->
-    <div id="vista-estado" class="seccion-contenido max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Sidebar Izquierdo PC -->
+    <div id="vista-estado" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <aside class="hidden lg:block lg:col-span-3 space-y-4">
             <div class="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm flex flex-col">
                 <button onclick="navegarA('inicio')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="home" class="w-4 h-4"></i> Inicio</button>
@@ -156,13 +123,8 @@
                 <button onclick="navegarA('anuncios')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="megaphone" class="w-4 h-4"></i> Anuncios</button>
                 <button onclick="solicitarAccesoAdmin()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="settings" class="w-4 h-4"></i> Configuración</button>
             </div>
-            <div class="bg-red-50 border border-red-100 rounded-2xl p-4 text-center">
-                <p class="text-xs text-red-700 font-bold mb-2">🚨 Caseta Seguridad</p>
-                <a href="tel:5551234567" class="block w-full bg-red-600 text-white py-2 rounded-xl text-xs font-bold shadow-sm">555 123 4567</a>
-            </div>
         </aside>
 
-        <!-- Tarjetas e Historial -->
         <section class="lg:col-span-9 space-y-6">
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
@@ -185,7 +147,6 @@
 
             <div class="bg-white border border-slate-100 rounded-3xl p-4 sm:p-6 shadow-sm space-y-6">
                 <h2 class="text-lg font-bold text-slate-900 border-b pb-2">Estado detallado de servicios</h2>
-                
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="border border-slate-100 bg-slate-50/50 rounded-2xl p-4 space-y-2">
                         <div class="flex items-center gap-2"><span id="badgeCardAgua"></span></div>
@@ -195,338 +156,4 @@
                         <div class="flex items-center gap-2"><span id="badgeCardLuzDepto"></span></div>
                         <p id="descCardLuzDepto" class="text-xs text-slate-500"></p>
                     </div>
-                    <div class="border border-slate-100 bg-slate-50/50 rounded-2xl p-4 space-y-2">
-                        <div class="flex items-center gap-2"><span id="badgeCardLuzComun"></span></div>
-                        <p id="descCardLuzComun" class="text-xs text-slate-500"></p>
-                    </div>
-                </div>
-
-                <!-- Historial -->
-                <div class="space-y-3">
-                    <h3 class="font-bold text-slate-800 text-sm flex justify-between items-center">
-                        <span>Historial de variaciones</span>
-                    </h3>
-                    <div class="overflow-x-auto border border-slate-100 rounded-xl">
-                        <table class="w-full text-left text-xs min-w-[550px]">
-                            <thead>
-                                <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 font-semibold">
-                                    <th class="p-3">Fecha y Hora</th>
-                                    <th class="p-3">Agua</th>
-                                    <th class="p-3">Luz Deptos</th>
-                                    <th class="p-3">Luz Áreas C.</th>
-                                    <th class="p-3">Notas</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaHistorialBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- VISTA: ANUNCIOS -->
-    <div id="vista-anuncios" class="seccion-contenido max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-4">
-        <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4">
-            <h2 class="text-lg font-bold text-slate-900 border-b pb-2 flex items-center gap-2">
-                <i data-lucide="megaphone" class="w-5 h-5 text-cyan-700"></i> Tablero de anuncios comunitarios
-            </h2>
-            <ul id="listaAvisosCompleta" class="space-y-3"></ul>
-        </div>
-    </div>
-
-    <!-- VISTA: ADMIN PANEL -->
-    <div id="vista-admin" class="seccion-contenido max-w-7xl mx-auto px-4 sm:px-6 py-4">
-        <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 space-y-6 shadow-xl">
-            <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
-                <div>
-                    <h2 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
-                        <i data-lucide="sliders" class="w-5 h-5"></i> Panel de Control Autenticado
-                    </h2>
-                    <p class="text-xs text-slate-400 mt-1">Modificaciones guardadas en tiempo real.</p>
-                </div>
-                <button onclick="cerrarSesionAdmin()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2.5 py-1.5 rounded-lg font-semibold transition">
-                    Cerrar Sesión
-                </button>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-slate-900">
-                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
-                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider flex items-center gap-1 border-b pb-1">
-                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-600"></i> Modificar Suministros
-                    </h3>
-                    <div>
-                        <label class="block text-[10px] text-slate-400 font-bold mb-1">AGUA POTABLE:</label>
-                        <select id="adminAgua" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
-                            <option value="Disponible">🟢 Disponible</option>
-                            <option value="Limitado">🟡 Limitado / Ajustes</option>
-                            <option value="Interrupción">🔴 Interrupción / Corte</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] text-slate-400 font-bold mb-1">LUZ DEPARTAMENTOS:</label>
-                        <select id="adminLuzDepto" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
-                            <option value="Disponible">🟢 Disponible</option>
-                            <option value="Limitado">🟡 Limitado / Ajustes</option>
-                            <option value="Interrupción">🔴 Interrupción / Corte</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] text-slate-400 font-bold mb-1">LUZ ÁREAS COMUNES:</label>
-                        <select id="adminLuzComun" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
-                            <option value="Disponible">🟢 Disponible</option>
-                            <option value="Limitado">🟡 Limitado / Ajustes</option>
-                            <option value="Interrupción">🔴 Interrupción / Corte</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
-                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider flex items-center gap-1 border-b pb-1">
-                        <i data-lucide="bell" class="w-3.5 h-3.5 text-amber-500"></i> Crear Anuncio Vecinal
-                    </h3>
-                    <textarea id="nuevoAvisoTexto" rows="3" placeholder="Escribe el anuncio para la comunidad..." class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none resize-none"></textarea>
-                    <button onclick="agregarAviso()" class="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-bold py-2 rounded-xl text-xs transition">
-                        Publicar Anuncio
-                    </button>
-                </div>
-
-                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
-                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider flex items-center gap-1 border-b pb-1">
-                        <i data-lucide="history" class="w-3.5 h-3.5 text-emerald-500"></i> Registrar en Historial
-                    </h3>
-                    <input type="text" id="histNotas" placeholder="Ej: Breve corte por mantenimiento general..." class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none">
-                    <button onclick="registrarEnHistorial()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition">
-                        Guardar Evento
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (Arreglada) ================= -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 h-16 flex items-center justify-around px-2 z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
-        <button id="btn-nav-inicio" onclick="navegarA('inicio')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
-            <i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px] font-medium tracking-wide">Inicio</span>
-        </button>
-        <button id="btn-nav-estado" onclick="navegarA('estado')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
-            <i data-lucide="activity" class="w-5 h-5"></i><span class="text-[10px] font-medium tracking-wide">Estado</span>
-        </button>
-        <button id="btn-nav-anuncios" onclick="navegarA('anuncios')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
-            <i data-lucide="megaphone" class="w-5 h-5"></i><span class="text-[10px] font-medium tracking-wide">Anuncios</span>
-        </button>
-        <button id="btn-nav-admin" onclick="solicitarAccesoAdmin()" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
-            <i data-lucide="settings" class="w-5 h-5"></i><span class="text-[10px] font-medium tracking-wide">Admin</span>
-        </button>
-    </div>
-
-
-    <!-- JAVASCRIPT DE CONTROL DINÁMICO -->
-    <script>
-        const CLAVE_ADMIN = "1234"; 
-        let adminAutenticado = false;
-
-        const datosInicialesDefecto = {
-            agua: "Disponible",
-            luzDepto: "Disponible",
-            luzComun: "Disponible",
-            ultimaActualizacion: "20 Jun 2026 • 01:00 PM",
-            avisos: [
-                { texto: "Recolección de basura en horario regular.", fecha: "20 Jun" },
-                { texto: "Mantenimiento preventivo en albercas el domingo por la mañana.", fecha: "19 Jun" }
-            ],
-            historial: [
-                { fecha: "20 Jun 2026, 01:00 PM", agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible", notas: "Sistemas estables sin novedades." },
-                { fecha: "17 Jun 2026, 06:45 PM", agua: "Interrupción", luzDepto: "Disponible", luzComun: "Limitado", notas: "Reparación eléctrica en luminarias exteriores." }
-            ]
-        };
-
-        let appData = JSON.parse(localStorage.getItem("lasGaviotasData")) || datosInicialesDefecto;
-
-        function guardarDatos() {
-            localStorage.setItem("lasGaviotasData", JSON.stringify(appData));
-            renderizarComponentes();
-        }
-
-        function solicitarAccesoAdmin() {
-            if (adminAutenticado) {
-                navegarA('admin');
-                return;
-            }
-            const passwordIntroducido = prompt("🔒 Ingrese la contraseña de Administración:");
-            if (passwordIntroducido === CLAVE_ADMIN) {
-                adminAutenticado = true;
-                navegarA('admin');
-            } else if (passwordIntroducido !== null) {
-                alert("❌ Contraseña incorrecta. Acceso denegado.");
-            }
-        }
-
-        function cerrarSesionAdmin() {
-            adminAutenticado = false;
-            alert("Sesión de administrador cerrada.");
-            navegarA('inicio');
-        }
-
-        function navegarA(idSeccion) {
-            if (idSeccion === 'admin' && !adminAutenticado) {
-                solicitarAccesoAdmin();
-                return;
-            }
-
-            document.querySelectorAll('.seccion-contenido').forEach(sec => sec.classList.add('hidden'));
-            document.getElementById(`vista-${idSeccion}`).classList.remove('hidden');
-
-            const hero = document.getElementById('hero-section');
-            if(idSeccion === 'admin') {
-                hero.classList.add('hidden');
-            } else {
-                hero.classList.remove('hidden');
-            }
-
-            document.querySelectorAll('.nav-button').forEach(btn => {
-                btn.classList.remove('text-cyan-700', 'font-bold', 'scale-105');
-                btn.classList.add('text-slate-400', 'font-medium');
-            });
-
-            const botonActivo = document.getElementById(`btn-nav-${idSeccion}`);
-            if(botonActivo) {
-                botonActivo.classList.remove('text-slate-400', 'font-medium');
-                botonActivo.classList.add('text-cyan-700', 'font-bold', 'scale-105');
-            }
-        }
-
-        function renderizarComponentes() {
-            const config = {
-                "Disponible": { color: "text-green-600", bg: "bg-green-500", badge: "bg-green-50 text-green-700 border-green-200", descAgua: "Suministro normal en todos los sectores.", descLuzDepto: "Red eléctrica funcionando de manera correcta en complejos.", descLuzComun: "Alumbrado, portones y amenidades operando al 100%." },
-                "Limitado": { color: "text-amber-500", bg: "bg-amber-500", badge: "bg-amber-50 text-amber-700 border-amber-200", descAgua: "Presión baja por mantenimiento en bombas.", descLuzDepto: "Variaciones menores reportadas en fases residenciales.", descLuzComun: "Uso restringido de energía en áreas comunes por ajustes técnicos." },
-                "Interrupción": { color: "text-red-500", bg: "bg-red-500", badge: "bg-red-50 text-red-700 border-red-200", descAgua: "Corte temporal debido a reparación de fuga.", descLuzDepto: "Corte general de energía residencial en la zona.", descLuzComun: "Interrupción de servicio eléctrico en vialidades internas y áreas compartidas." }
-            };
-
-            // Renders de Inicio
-            document.getElementById("resumenAguaTexto").innerText = appData.agua;
-            document.getElementById("resumenAguaPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.agua].bg}`;
-            
-            document.getElementById("resumenLuzDeptoTexto").innerText = appData.luzDepto;
-            document.getElementById("resumenLuzDeptoPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzDepto].bg}`;
-
-            document.getElementById("resumenLuzComunTexto").innerText = appData.luzComun;
-            document.getElementById("resumenLuzComunPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzComun].bg}`;
-
-            // Renders de Estado Widgets
-            document.getElementById("widgetAgua").className = `text-xs font-bold ${config[appData.agua].color}`;
-            document.getElementById("widgetAgua").innerText = appData.agua;
-            
-            document.getElementById("widgetLuzDepto").className = `text-xs font-bold ${config[appData.luzDepto].color}`;
-            document.getElementById("widgetLuzDepto").innerText = appData.luzDepto;
-
-            document.getElementById("widgetLuzComun").className = `text-xs font-bold ${config[appData.luzComun].color}`;
-            document.getElementById("widgetLuzComun").innerText = appData.luzComun;
-
-            document.getElementById("widgetActualizacion").innerText = appData.ultimaActualizacion.split('•')[1] || appData.ultimaActualizacion;
-
-            // Renders de Tarjetas de Estado
-            document.getElementById("badgeCardAgua").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.agua].badge}`;
-            document.getElementById("badgeCardAgua").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.agua].bg}"></span> Agua: ${appData.agua}`;
-            document.getElementById("descCardAgua").innerText = config[appData.agua].descAgua;
-
-            document.getElementById("badgeCardLuzDepto").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzDepto].badge}`;
-            document.getElementById("badgeCardLuzDepto").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzDepto].bg}"></span> Luz Deptos: ${appData.luzDepto}`;
-            document.getElementById("descCardLuzDepto").innerText = config[appData.luzDepto].descLuzDepto;
-
-            document.getElementById("badgeCardLuzComun").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzComun].badge}`;
-            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzComun].bg}"></span> Luz Áreas C.: ${appData.luzComun}`;
-            document.getElementById("descCardLuzComun").innerText = config[appData.luzComun].descLuzComun;
-
-            // Render Circulares
-            const listaAnuncios = document.getElementById("listaAvisosCompleta");
-            listaAnuncios.innerHTML = "";
-            appData.avisos.forEach(aviso => {
-                listaAnuncios.innerHTML += `
-                    <li class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex flex-col gap-1">
-                        <div class="flex justify-between items-center text-[10px] text-slate-400 font-semibold">
-                            <span>CIRCULAR OFICIAL</span>
-                            <span>${aviso.fecha}</span>
-                        </div>
-                        <p class="text-xs text-slate-700 leading-relaxed">${aviso.texto}</p>
-                    </li>
-                `;
-            });
-
-            // Render Historial Tabla
-            const tabla = document.getElementById("tablaHistorialBody");
-            tabla.innerHTML = "";
-            appData.historial.forEach((h, index) => {
-                tabla.innerHTML += `
-                    <tr class="${index % 2 === 1 ? 'bg-slate-50/40' : ''}">
-                        <td class="p-3 font-medium text-slate-800">${h.fecha.split('•')[0]}</td>
-                        <td class="p-3 font-bold ${config[h.agua].color}">● ${h.agua}</td>
-                        <td class="p-3 font-bold ${config[h.luzDepto].color}">● ${h.luzDepto}</td>
-                        <td class="p-3 font-bold ${config[h.luzComun || 'Disponible'].color}">● ${h.luzComun || 'Disponible'}</td>
-                        <td class="p-3 text-slate-500">${h.notas}</td>
-                    </tr>
-                `;
-            });
-
-            document.getElementById("adminAgua").value = appData.agua;
-            document.getElementById("adminLuzDepto").value = appData.luzDepto;
-            document.getElementById("adminLuzComun").value = appData.luzComun || "Disponible";
-
-            // Corrección crítica: Renderizar iconos de Lucide de forma segura en navegador
-            if(window.lucide && typeof window.lucide.createIcons === 'font-bold' || window.lucide) {
-                lucide.createIcons();
-            }
-        }
-
-        function obtenerHoraYFecha() {
-            const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-            const d = new Date();
-            let hr = d.getHours();
-            const min = String(d.getMinutes()).padStart(2, '0');
-            const ampm = hr >= 12 ? 'PM' : 'AM';
-            hr = hr % 12 || 12;
-            return `${d.getDate()} ${meses[d.getMonth()]} • ${hr}:${min} ${ampm}`;
-        }
-
-        function actualizarDesdeAdmin() {
-            appData.agua = document.getElementById("adminAgua").value;
-            appData.luzDepto = document.getElementById("adminLuzDepto").value;
-            appData.luzComun = document.getElementById("adminLuzComun").value;
-            appData.ultimaActualizacion = obtenerHoraYFecha();
-            guardarDatos();
-        }
-
-        function agregarAviso() {
-            const txt = document.getElementById("nuevoAvisoTexto");
-            if (!txt.value.trim()) return alert("El mensaje no puede estar vacío.");
-            const d = new Date();
-            const fechaCorta = `${d.getDate()} ${["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][d.getMonth()]}`;
-            appData.avisos.unshift({ texto: txt.value.trim(), fecha: fechaCorta });
-            txt.value = "";
-            guardarDatos();
-            alert("¡Anuncio publicado con éxito!");
-        }
-
-        function registrarEnHistorial() {
-            const notas = document.getElementById("histNotas");
-            if (!notas.value.trim()) return alert("Agrega detalles obligatorios para el historial.");
-            appData.historial.unshift({
-                fecha: obtenerHoraYFecha(),
-                agua: appData.agua,
-                luzDepto: appData.luzDepto,
-                luzComun: appData.luzComun,
-                notas: notas.value.trim()
-            });
-            notas.value = "";
-            guardarDatos();
-            alert("Variación del historial registrada.");
-        }
-
-        window.onload = () => {
-            renderizarComponentes();
-            navegarA('inicio');
-        };
-    </script>
-</body>
-</html>
+                    <div class="border border-slate-1
