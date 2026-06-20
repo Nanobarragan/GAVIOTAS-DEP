@@ -1,12 +1,15 @@
 {
-  "name": "alertas-gaviotas-backend",
-  "version": "1.0.0",
-  "description": "Servidor automático de notificaciones para vecinos",
+  "name": "las-gaviotas-backend-automatico",
+  "version": "1.1.0",
+  "description": "Servidor backend automatizado para notificaciones push en tiempo real",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "firebase-admin": "^12.0.0"
+    "firebase-admin": "^12.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
