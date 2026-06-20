@@ -2,150 +2,199 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Las Gaviotas - Panel Residencial</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Gaviotas - Estado de Servicios</title>
     <link rel="manifest" href="/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Gaviotas">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap" rel="stylesheet">
-    <style>
-        .font-logo { font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.05em; }
-        .font-sublogo { font-family: 'Montserrat', sans-serif; letter-spacing: 0.4em; }
-        @media (max-width: 1024px) { body { padding-bottom: 80px; } }
-    </style>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3104/3104847.png">
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 sm:p-8 font-sans">
 
-    <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-14 h-10 text-cyan-700 flex items-center justify-center">
-                    <svg viewBox="0 0 120 60" class="w-full h-full fill-current">
-                        <path d="M 10,22 C 32,10 48,12 55,34 C 57,38 58,41 60,45 C 62,41 63,38 65,34 C 72,12 88,10 110,22 C 92,26 80,38 67,52 C 64,55 62,56 60,56 C 58,56 56,55 53,52 C 40,38 28,26 10,22 Z" />
-                    </svg>
-                </div>
-                <div class="flex flex-col select-none">
-                    <div class="flex items-baseline gap-1">
-                        <span class="font-logo text-[11px] text-cyan-800 leading-none">LAS</span>
-                        <span class="font-logo text-lg sm:text-xl text-cyan-900 font-bold tracking-normal leading-none">GAVIOTAS</span>
-                    </div>
-                    <div class="w-full border-t border-cyan-700/30 my-0.5"></div>
-                    <span class="font-sublogo text-[7px] sm:text-[8px] text-cyan-600 font-medium uppercase leading-none pl-0.5">PRIVADA</span>
-                </div>
+    <div id="bannerInstalacion" class="hidden fixed bottom-4 left-4 right-4 bg-cyan-600 text-white p-4 rounded-2xl shadow-2xl border border-cyan-500 flex justify-between items-center z-50 animate-bounce">
+        <div class="flex items-center gap-3">
+            <i data-lucide="download-cloud" class="w-6 h-6"></i>
+            <div>
+                <p class="text-xs font-bold">Instala la App de Las Gaviotas</p>
+                <p class="text-[10px] text-cyan-100">Recibe alertas de agua y luz al instante.</p>
             </div>
-            <button onclick="solicitarAccesoAdmin()" class="hidden lg:flex bg-slate-100 hover:bg-cyan-50 hover:text-cyan-700 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition items-center gap-1.5 shadow-sm">
-                <i data-lucide="lock" class="w-3.5 h-3.5"></i> Modo Admin
+        </div>
+        <button id="btnInstalarAndroid" class="bg-white text-cyan-700 font-bold text-xs px-4 py-2 rounded-xl shadow-md">Instalar</button>
+    </div>
+
+    <div class="max-w-md mx-auto space-y-6">
+        <div class="text-center py-4">
+            <h1 class="text-2xl font-bold text-cyan-400">🏡 Residencial Las Gaviotas</h1>
+            <p class="text-xs text-slate-400 mt-1">Estado de los servicios en tiempo real</p>
+        </div>
+
+        <div id="zonaAlertas" class="hidden bg-slate-800 border border-slate-700 p-4 rounded-2xl text-center space-y-3 shadow-lg">
+            <p class="text-xs text-slate-300">¿Quieres recibir alertas importantes de cortes en tu celular?</p>
+            <button onclick="solicitarPermisoNotificaciones()" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-2.5 rounded-xl text-xs transition">
+                🔔 Activar Alertas en mi Celular
             </button>
         </div>
-    </header>
 
-    <section id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
-        <div class="bg-gradient-to-r from-cyan-800 via-cyan-900 to-slate-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-md">
-            <div class="absolute -right-6 -bottom-6 w-52 h-32 text-cyan-700/15 pointer-events-none transform -rotate-12">
-                <svg viewBox="0 0 120 60" class="w-full h-full fill-current">
-                    <path d="M 10,22 C 32,10 48,12 55,34 C 57,38 58,41 60,45 C 62,41 63,38 65,34 C 72,12 88,10 110,22 C 92,26 80,38 67,52 C 64,55 62,56 60,56 C 58,56 56,55 53,52 C 40,38 28,26 10,22 Z" />
-                </svg>
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 shadow-xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Servicio</span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Estado</span>
             </div>
-            <div class="relative z-10 space-y-1">
-                <h1 class="font-logo text-xl sm:text-3xl font-bold tracking-wide text-cyan-100">Las Gaviotas</h1>
-                <p class="text-xs text-slate-300 font-light tracking-wide">Panel informativo de la comunidad residencial.</p>
-            </div>
-        </div>
-    </section>
 
-    <div id="loading-screen" class="max-w-7xl mx-auto px-4 py-12 text-center text-slate-400 text-sm">
-        <p class="animate-pulse">Conectando con el servidor residencial en tiempo real...</p>
-    </div>
-
-    <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
-        <div id="banner-notificaciones" class="hidden bg-cyan-50 border border-cyan-100 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
-            <div class="flex items-center gap-3 text-center sm:text-left">
-                <div class="p-2 bg-cyan-100 text-cyan-800 rounded-xl hidden sm:block"><i data-lucide="bell" class="w-5 h-5"></i></div>
-                <div>
-                    <p class="text-xs font-bold text-cyan-900">¿Quieres recibir alertas importantes en tu celular?</p>
-                    <p class="text-[11px] text-cyan-700">Te notificaremos de inmediato ante cortes de agua, luz o avisos urgentes.</p>
-                </div>
-            </div>
-            <button onclick="solicitarPermisoNotificaciones()" class="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition shadow-sm whitespace-nowrap">Activar Alertas</button>
-        </div>
-
-        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm text-center space-y-3">
-            <div class="w-12 h-12 bg-cyan-50 text-cyan-700 rounded-full flex items-center justify-center mx-auto">
-                <i data-lucide="home" class="w-6 h-6"></i>
-            </div>
-            <h2 class="text-lg font-bold text-slate-900">¡Bienvenido a tu Panel Residencial!</h2>
-            <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-                Revisa el estado de los servicios del complejo y las últimas circulares publicadas por la administración.
-            </p>
-        </div>
-
-        <div class="space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 pl-1">Resumen del Complejo</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-cyan-200 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="p-3 bg-cyan-50 text-cyan-700 rounded-xl"><i data-lucide="droplet" class="w-6 h-6"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Servicio de Agua</p>
-                            <p id="resumenAguaTexto" class="text-base font-bold text-slate-800">Cargando...</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span id="resumenAguaPunto" class="w-3 h-3 rounded-full"></span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+            <div class="flex justify-between items-center py-2">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl"><i data-lucide="droplet"></i></div>
+                    <div>
+                        <p class="text-sm font-semibold">Agua Potable</p>
+                        <p class="text-[10px] text-slate-400">Red General</p>
                     </div>
                 </div>
-                <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-amber-200 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="p-3 bg-amber-50 text-amber-500 rounded-xl"><i data-lucide="zap" class="w-6 h-6"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Luz Departamentos</p>
-                            <p id="resumenLuzDeptoTexto" class="text-base font-bold text-slate-800">Cargando...</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span id="resumenLuzDeptoPunto" class="w-3 h-3 rounded-full"></span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                <span id="statusAgua" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            </div>
+
+            <div class="flex justify-between items-center py-2">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl"><i data-lucide="bolt"></i></div>
+                    <div>
+                        <p class="text-sm font-semibold">Luz Departamentos</p>
+                        <p class="text-[10px] text-slate-400">Conexión CFE</p>
                     </div>
                 </div>
-                <div onclick="navegarA('estado')" class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center justify-between cursor-pointer hover:border-amber-200 transition">
-                    <div class="flex items-center gap-4">
-                        <div class="p-3 bg-orange-50 text-orange-500 rounded-xl"><i data-lucide="building" class="w-6 h-6"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">Luz Áreas Comunes</p>
-                            <p id="resumenLuzComunTexto" class="text-base font-bold text-slate-800">Cargando...</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span id="resumenLuzComunPunto" class="w-3 h-3 rounded-full"></span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                <span id="statusLuzDepto" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            </div>
+
+            <div class="flex justify-between items-center py-2">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl"><i data-lucide="lightbulb"></i></div>
+                    <div>
+                        <p class="text-sm font-semibold">Luz Áreas Comunes</p>
+                        <p class="text-[10px] text-slate-400">Portones y Vialidades</p>
                     </div>
                 </div>
+                <span id="statusLuzComun" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-700 text-slate-300">Cargando...</span>
+            </div>
+
+            <div class="text-center pt-2 border-t border-slate-700 text-[10px] text-slate-500">
+                Última actualización: <span id="lblActualizacion">--/-- --:--</span>
             </div>
         </div>
     </div>
 
-    <div id="vista-estado" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <aside class="hidden lg:block lg:col-span-3 space-y-4">
-            <div class="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm flex flex-col">
-                <button onclick="navegarA('inicio')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="home" class="w-4 h-4"></i> Inicio</button>
-                <button onclick="navegarA('estado')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-cyan-700 bg-cyan-50/70 text-left"><i data-lucide="activity" class="w-4 h-4"></i> Estado</button>
-                <button onclick="navegarA('anuncios')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="megaphone" class="w-4 h-4"></i> Anuncios</button>
-                <button onclick="solicitarAccesoAdmin()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-left"><i data-lucide="settings" class="w-4 h-4"></i> Configuración</button>
-            </div>
-        </aside>
-        <section class="lg:col-span-9 space-y-6">
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
-                    <div class="p-2 bg-cyan-50 text-cyan-700 rounded-xl"><i data-lucide="droplet" class="w-4 h-4"></i></div>
-                    <div><p class="text-[10px] text-slate-400 uppercase font-medium">Agua</p><p id="widgetAgua" class="text-xs font-bold"></p></div>
-                </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
-                    <div class="p-2 bg-amber-50 text-amber-500 rounded-xl"><i data-lucide="zap" class="w-4 h-4"></i></div>
-                    <div><p class="text-[10px] text-slate-400 uppercase font-medium">Luz Deptos</p><p id="widgetLuzDe
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUpbVlkqgr8-To72rS5hIeHJ_cpklknR8",
+            authDomain: "gaviotas-efa2b.firebaseapp.com",
+            databaseURL: "https://gaviotas-efa2b-default-rtdb.firebaseio.com",
+            projectId: "gaviotas-efa2b",
+            storageBucket: "gaviotas-efa2b.firebasestorage.app",
+            messagingSenderId: "483619094544",
+            appId: "1:483619094544:web:470213b77c84921ead0a95"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        let messaging = null;
+        if (firebase.messaging.isSupported()) {
+            messaging = firebase.messaging();
+        }
+
+        // 1. SINCRONIZACIÓN DE INTERFAZ EN TIEMPO REAL
+        database.ref('lasGaviotasData').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                 pintarEstado("statusAgua", data.agua);
+                 pintarEstado("statusLuzDepto", data.luzDepto);
+                 pintarEstado("statusLuzComun", data.luzComun);
+                 document.getElementById("lblActualizacion").innerText = data.ultimaActualizacion || "Reciente";
+            }
+        });
+
+        function pintarEstado(elementId, estado) {
+            const el = document.getElementById(elementId);
+            el.innerText = estado || "Disponible";
+            if (estado === "Interrupción") {
+                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30";
+            } else if (estado === "Limitado") {
+                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30";
+            } else {
+                el.className = "text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+            }
+        }
+
+        // 2. DETECTOR DE INSTALACIÓN EXCLUSIVO PARA ANDROID
+        let eventoInstalacionAndroid;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Evita que Android muestre su banner gris feo por defecto
+            e.preventDefault();
+            eventoInstalacionAndroid = e;
+            // Muestra nuestro banner personalizado moderno de Tailwind
+            document.getElementById('bannerInstalacion').classList.remove('hidden');
+        });
+
+        document.getElementById('btnInstalarAndroid').addEventListener('click', async () => {
+            if (eventoInstalacionAndroid) {
+                eventoInstalacionAndroid.prompt();
+                const { outcome } = await eventoInstalacionAndroid.userChoice;
+                if (outcome === 'accepted') {
+                    document.getElementById('bannerInstalacion').classList.add('hidden');
+                }
+            }
+        });
+
+        // Ocultar banner si la app ya fue instalada
+        window.addEventListener('appinstalled', () => {
+            document.getElementById('bannerInstalacion').classList.add('hidden');
+        });
+
+        // 3. REGISTRO DEL SERVICE WORKER Y CONTROL DE BANNER DE ALERTAS
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then((registration) => {
+                console.log('Service Worker registrado correctamente.');
+                if (messaging) {
+                    messaging.useServiceWorker(registration);
+                    // Si el vecino aún no acepta notificaciones, mostramos el botón flotante "Activar Alertas"
+                    if (Notification.permission !== 'granted') {
+                        document.getElementById('zonaAlertas').classList.remove('hidden');
+                    }
+                }
+            })
+            .catch(err => console.error('Error Service Worker:', err));
+        }
+
+        // 4. GENERAR TOKEN Y GUARDAR EN LA NUBE (COMPATIBLE CON IPHONE Y ANDROID)
+        window.solicitarPermisoNotificaciones = function() {
+            if (!messaging) {
+                alert("Las notificaciones no son compatibles con este navegador web. Si usas iPhone, recuerda añadir la app a tu Pantalla de Inicio primero.");
+                return;
+            }
+
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    messaging.getToken({ vapidKey: 'BM2f-R0SgXb0pC2o6vS775_N49U8wYdFkM9XclZOnR82cl9o_9CpkLknR8_TU_CLAVE_VAPID_REAL' })
+                    .then((currentToken) => {
+                        if (currentToken) {
+                            // Guardamos el token en tu Firebase bajo la estructura limpia
+                            database.ref('tokensNotificaciones').push(currentToken).then(() => {
+                                document.getElementById('zonaAlertas').classList.add('hidden');
+                                alert("¡Alertas activadas con éxito en tu dispositivo!");
+                            });
+                        }
+                    })
+                    .catch(err => console.error('Error al obtener Token:', err));
+                }
+            });
+        };
+
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+</html>
