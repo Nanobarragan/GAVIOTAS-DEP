@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Las Gaviotas - Panel Residencial</title>
+    <!-- Tailwind CSS para diseño profesional y adaptabilidad móvil -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons (Versión fija y estable para producción) -->
     <script src="https://unpkg.com/lucide@0.400.0/dist/umd/lucide.js"></script>
+    <!-- Google Fonts para emular la tipografía elegante del logo original -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         .font-logo { font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.05em; }
@@ -15,6 +18,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
+    <!-- 1. TOP NAV -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -38,6 +42,7 @@
         </div>
     </header>
 
+    <!-- HERO TITULO -->
     <section id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         <div class="bg-gradient-to-r from-cyan-800 via-cyan-900 to-slate-900 rounded-3xl p-6 text-white relative overflow-hidden shadow-md">
             <div class="absolute -right-6 -bottom-6 w-52 h-32 text-cyan-700/15 pointer-events-none transform -rotate-12">
@@ -52,10 +57,12 @@
         </div>
     </section>
 
+    <!-- PANTALLA DE CARGA INICIAL -->
     <div id="loading-screen" class="max-w-7xl mx-auto px-4 py-12 text-center text-slate-400 text-sm">
         <p class="animate-pulse">Conectando con el servidor residencial en tiempo real...</p>
     </div>
 
+    <!-- VISTA: INICIO -->
     <div id="vista-inicio" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm text-center space-y-3">
             <div class="w-12 h-12 bg-cyan-50 text-cyan-700 rounded-full flex items-center justify-center mx-auto">
@@ -115,6 +122,7 @@
         </div>
     </div>
 
+    <!-- VISTA: ESTADO DE SERVICIOS -->
     <div id="vista-estado" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <aside class="hidden lg:block lg:col-span-3 space-y-4">
             <div class="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm flex flex-col">
@@ -156,4 +164,310 @@
                         <div class="flex items-center gap-2"><span id="badgeCardLuzDepto"></span></div>
                         <p id="descCardLuzDepto" class="text-xs text-slate-500"></p>
                     </div>
-                    <div class="border border-slate-1
+                    <div class="border border-slate-100 bg-slate-50/50 rounded-2xl p-4 space-y-2">
+                        <div class="flex items-center gap-2"><span id="badgeCardLuzComun"></span></div>
+                        <p id="descCardLuzComun" class="text-xs text-slate-500"></p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-800 text-sm">Historial de variaciones</h3>
+                    <div class="overflow-x-auto border border-slate-100 rounded-xl">
+                        <table class="w-full text-left text-xs min-w-[550px]">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 font-semibold">
+                                    <th class="p-3">Fecha y Hora</th>
+                                    <th class="p-3">Agua</th>
+                                    <th class="p-3">Luz Deptos</th>
+                                    <th class="p-3">Luz Áreas C.</th>
+                                    <th class="p-3">Notas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaHistorialBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISTA: ANUNCIOS -->
+    <div id="vista-anuncios" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-4">
+        <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4">
+            <h2 class="text-lg font-bold text-slate-900 border-b pb-2 flex items-center gap-2">
+                <i data-lucide="megaphone" class="w-5 h-5 text-cyan-700"></i> Tablero de anuncios comunitarios
+            </h2>
+            <ul id="listaAvisosCompleta" class="space-y-3"></ul>
+        </div>
+    </div>
+
+    <!-- VISTA: ADMIN PANEL -->
+    <div id="vista-admin" class="seccion-contenido hidden max-w-7xl mx-auto px-4 sm:px-6 py-4">
+        <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 space-y-6 shadow-xl">
+            <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+                <div>
+                    <h2 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-5 h-5"></i> Panel de Control (Sincronizado)
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Los vecinos verán los cambios al instante.</p>
+                </div>
+                <button onclick="cerrarSesionAdmin()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] px-2.5 py-1.5 rounded-lg font-semibold transition">Cerrar Sesión</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-slate-900">
+                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider border-b pb-1">Suministros</h3>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 font-bold mb-1">AGUA POTABLE:</label>
+                        <select id="adminAgua" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
+                            <option value="Disponible">🟢 Disponible</option>
+                            <option value="Limitado">🟡 Limitado / Ajustes</option>
+                            <option value="Interrupción">🔴 Interrupción / Corte</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 font-bold mb-1">LUZ DEPARTAMENTOS:</label>
+                        <select id="adminLuzDepto" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
+                            <option value="Disponible">🟢 Disponible</option>
+                            <option value="Limitado">🟡 Limitado / Ajustes</option>
+                            <option value="Interrupción">🔴 Interrupción / Corte</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 font-bold mb-1">LUZ ÁREAS COMUNES:</label>
+                        <select id="adminLuzComun" class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none" onchange="actualizarDesdeAdmin()">
+                            <option value="Disponible">🟢 Disponible</option>
+                            <option value="Limitado">🟡 Limitado / Ajustes</option>
+                            <option value="Interrupción">🔴 Interrupción / Corte</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider border-b pb-1">Nuevo Anuncio</h3>
+                    <textarea id="nuevoAvisoTexto" rows="3" placeholder="Escribe el anuncio..." class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none resize-none"></textarea>
+                    <button onclick="agregarAviso()" class="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-bold py-2 rounded-xl text-xs transition">Publicar</button>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl space-y-3 shadow-sm">
+                    <h3 class="font-bold text-xs text-slate-700 uppercase tracking-wider border-b pb-1">Registrar Historial</h3>
+                    <input type="text" id="histNotas" placeholder="Ej: Breve corte por mantenimiento..." class="w-full p-2 bg-slate-50 border rounded-xl text-xs outline-none">
+                    <button onclick="registrarEnHistorial()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition">Guardar Evento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 h-16 flex items-center justify-around px-2 z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
+        <button id="btn-nav-inicio" onclick="navegarA('inicio')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
+            <i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px] font-medium">Inicio</span>
+        </button>
+        <button id="btn-nav-estado" onclick="navegarA('estado')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
+            <i data-lucide="activity" class="w-5 h-5"></i><span class="text-[10px] font-medium">Estado</span>
+        </button>
+        <button id="btn-nav-anuncios" onclick="navegarA('anuncios')" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
+            <i data-lucide="megaphone" class="w-5 h-5"></i><span class="text-[10px] font-medium">Anuncios</span>
+        </button>
+        <button id="btn-nav-admin" onclick="solicitarAccesoAdmin()" class="nav-button flex flex-col items-center gap-1 text-slate-400 flex-1 py-1 transition-all">
+            <i data-lucide="settings" class="w-5 h-5"></i><span class="text-[10px] font-medium">Admin</span>
+        </button>
+    </div>
+
+    <!-- ENLACE E INICIALIZACIÓN MÓDULOS FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        // Credenciales oficiales de tu proyecto "gaviotas-efa2b"
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUpbVlkqgr8-To72rS5hIeHJ_cpklknR8",
+            authDomain: "gaviotas-efa2b.firebaseapp.com",
+            databaseURL: "https://gaviotas-efa2b-default-rtdb.firebaseio.com",
+            projectId: "gaviotas-efa2b",
+            storageBucket: "gaviotas-efa2b.firebasestorage.app",
+            messagingSenderId: "483619094544",
+            appId: "1:483619094544:web:470213b77c84921ead0a95"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'lasGaviotasData');
+
+        const CLAVE_ADMIN = "1234"; 
+        let adminAutenticado = false;
+        let appData = {};
+
+        // Escucha cambios en Tiempo Real
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            
+            // Si la base de datos está totalmente vacía en Firebase, inyectamos los datos iniciales
+            if (!data) {
+                appData = {
+                    agua: "Disponible", 
+                    luzDepto: "Disponible", 
+                    luzComun: "Disponible",
+                    ultimaActualizacion: "20 Jun 2026 • 01:00 PM",
+                    avisos: [{ texto: "Panel residencial sincronizado en tiempo real.", fecha: "20 Jun" }],
+                    historial: [{ fecha: "20 Jun 2026 • 01:00 PM", agua: "Disponible", luzDepto: "Disponible", luzComun: "Disponible", notas: "Sistemas estables sin novedades." }]
+                };
+                set(dbRef, appData);
+            } else {
+                appData = data;
+            }
+            
+            // Ocultamos la pantalla de carga inmediatamente al recibir datos
+            document.getElementById("loading-screen").classList.add("hidden");
+            renderizarComponentes();
+        }, (error) => {
+            console.error("Error de Firebase:", error);
+            document.getElementById("loading-screen").innerHTML = `<p class="text-red-500 font-bold">Error de conexión con Firebase. Revisa las reglas de seguridad.</p>`;
+        });
+
+        function renderizarComponentes() {
+            const config = {
+                "Disponible": { color: "text-green-600", bg: "bg-green-500", badge: "bg-green-50 text-green-700 border-green-200", descAgua: "Suministro normal en todos los sectores.", descLuzDepto: "Red eléctrica funcionando de manera correcta en complejos.", descLuzComun: "Alumbrado y portones operando al 100%." },
+                "Limitado": { color: "text-amber-500", bg: "bg-amber-500", badge: "bg-amber-50 text-amber-700 border-amber-200", descAgua: "Presión baja por mantenimiento.", descLuzDepto: "Variaciones menores reportadas.", descLuzComun: "Uso restringido por ajustes técnicos." },
+                "Interrupción": { color: "text-red-500", bg: "bg-red-500", badge: "bg-red-50 text-red-700 border-red-200", descAgua: "Corte temporal debido a fuga.", descLuzDepto: "Corte general de energía residencial.", descLuzComun: "Interrupción de servicio en vialidades y áreas comunes." }
+            };
+
+            document.getElementById("resumenAguaTexto").innerText = appData.agua;
+            document.getElementById("resumenAguaPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.agua].bg}`;
+            document.getElementById("resumenLuzDeptoTexto").innerText = appData.luzDepto;
+            document.getElementById("resumenLuzDeptoPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzDepto].bg}`;
+            document.getElementById("resumenLuzComunTexto").innerText = appData.luzComun;
+            document.getElementById("resumenLuzComunPunto").className = `w-3 h-3 rounded-full animate-pulse ${config[appData.luzComun].bg}`;
+
+            document.getElementById("widgetAgua").className = `text-xs font-bold ${config[appData.agua].color}`;
+            document.getElementById("widgetAgua").innerText = appData.agua;
+            document.getElementById("widgetLuzDepto").className = `text-xs font-bold ${config[appData.luzDepto].color}`;
+            document.getElementById("widgetLuzDepto").innerText = appData.luzDepto;
+            document.getElementById("widgetLuzComun").className = `text-xs font-bold ${config[appData.luzComun].color}`;
+            document.getElementById("widgetLuzComun").innerText = appData.luzComun;
+            
+            const horaWidget = appData.ultimaActualizacion ? appData.ultimaActualizacion.split('•')[1] : "01:00 PM";
+            document.getElementById("widgetActualizacion").innerText = horaWidget;
+
+            document.getElementById("badgeCardAgua").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.agua].badge}`;
+            document.getElementById("badgeCardAgua").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.agua].bg}"></span> Agua: ${appData.agua}`;
+            document.getElementById("descCardAgua").innerText = config[appData.agua].descAgua;
+
+            document.getElementById("badgeCardLuzDepto").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzDepto].badge}`;
+            document.getElementById("badgeCardLuzDepto").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzDepto].bg}"></span> Luz Deptos: ${appData.luzDepto}`;
+            document.getElementById("descCardLuzDepto").innerText = config[appData.luzDepto].descLuzDepto;
+
+            document.getElementById("badgeCardLuzComun").className = `inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full border ${config[appData.luzComun].badge}`;
+            document.getElementById("badgeCardLuzComun").innerHTML = `<span class="w-2 h-2 rounded-full ${config[appData.luzComun].bg}"></span> Luz Áreas C.: ${appData.luzComun}`;
+            document.getElementById("descCardLuzComun").innerText = config[appData.luzComun].descLuzComun;
+
+            const listaAnuncios = document.getElementById("listaAvisosCompleta");
+            listaAnuncios.innerHTML = "";
+            if (appData.avisos) {
+                appData.avisos.forEach(aviso => {
+                    listaAnuncios.innerHTML += `
+                        <li class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex flex-col gap-1">
+                            <div class="flex justify-between items-center text-[10px] text-slate-400 font-semibold"><span>CIRCULAR OFICIAL</span><span>${aviso.fecha}</span></div>
+                            <p class="text-xs text-slate-700 leading-relaxed">${aviso.texto}</p>
+                        </li>`;
+                });
+            }
+
+            const tabla = document.getElementById("tablaHistorialBody");
+            tabla.innerHTML = "";
+            if (appData.historial) {
+                appData.historial.forEach((h, idx) => {
+                    const fechaCorta = h.fecha ? h.fecha.split('•')[0] : "20 Jun 2026";
+                    tabla.innerHTML += `
+                        <tr class="${idx % 2 === 1 ? 'bg-slate-50/40' : ''}">
+                            <td class="p-3 font-medium text-slate-800">${fechaCorta}</td>
+                            <td class="p-3 font-bold ${config[h.agua].color}">● ${h.agua}</td>
+                            <td class="p-3 font-bold ${config[h.luzDepto].color}">● ${h.luzDepto}</td>
+                            <td class="p-3 font-bold ${config[h.luzComun].color}">● ${h.luzComun}</td>
+                            <td class="p-3 text-slate-500">${h.notas || h.notes || ""}</td>
+                        </tr>`;
+                });
+            }
+
+            document.getElementById("adminAgua").value = appData.agua;
+            document.getElementById("adminLuzDepto").value = appData.luzDepto;
+            document.getElementById("adminLuzComun").value = appData.luzComun;
+
+            if(window.lucide) lucide.createIcons();
+        }
+
+        window.solicitarAccesoAdmin = function() {
+            if (adminAutenticado) { navegarA('admin'); return; }
+            const passwordIntroducido = prompt("🔒 Ingrese la contraseña de Administración:");
+            if (passwordIntroducido === CLAVE_ADMIN) { adminAutenticado = true; navegarA('admin'); } 
+            else if (passwordIntroducido !== null) { alert("❌ Contraseña incorrecta."); }
+        };
+
+        window.cerrarSesionAdmin = function() { adminAutenticado = false; navegarA('inicio'); };
+
+        window.navegarA = function(idSeccion) {
+            if (idSeccion === 'admin' && !adminAutenticado) { solicitarAccesoAdmin(); return; }
+            document.querySelectorAll('.seccion-contenido').forEach(sec => sec.classList.add('hidden'));
+            const secDOM = document.getElementById(`vista-${idSeccion}`);
+            if(secDOM) secDOM.classList.remove('hidden');
+            
+            const hero = document.getElementById('hero-section');
+            if(idSeccion === 'admin') hero.classList.add('hidden'); else hero.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-button').forEach(btn => {
+                btn.classList.remove('text-cyan-700', 'font-bold', 'scale-105');
+                btn.classList.add('text-slate-400', 'font-medium');
+            });
+            const botonActivo = document.getElementById(`btn-nav-${idSeccion}`);
+            if(botonActivo) {
+                botonActivo.classList.remove('text-slate-400', 'font-medium');
+                botonActivo.classList.add('text-cyan-700', 'font-bold', 'scale-105');
+            }
+        };
+
+        function obtenerHoraYFecha() {
+            const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+            const d = new Date();
+            let hr = d.getHours(); const min = String(d.getMinutes()).padStart(2, '0');
+            const ampm = hr >= 12 ? 'PM' : 'AM'; hr = hr % 12 || 12;
+            return `${d.getDate()} ${meses[d.getMonth()]} • ${hr}:${min} ${ampm}`;
+        }
+
+        window.actualizarDesdeAdmin = function() {
+            appData.agua = document.getElementById("adminAgua").value;
+            appData.luzDepto = document.getElementById("adminLuzDepto").value;
+            appData.luzComun = document.getElementById("adminLuzComun").value;
+            appData.ultimaActualizacion = obtenerHoraYFecha();
+            set(dbRef, appData);
+        };
+
+        window.agregarAviso = function() {
+            const txt = document.getElementById("nuevoAvisoTexto");
+            if (!txt.value.trim()) return alert("El mensaje no puede estar vacío.");
+            const d = new Date();
+            const fechaCorta = `${d.getDate()} ${["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][d.getMonth()]}`;
+            if(!appData.avisos) appData.avisos = [];
+            appData.avisos.unshift({ texto: txt.value.trim(), fecha: fechaCorta });
+            txt.value = "";
+            set(dbRef, appData).then(() => alert("¡Anuncio publicado con éxito!"));
+        };
+
+        window.registrarEnHistorial = function() {
+            const notas = document.getElementById("histNotas");
+            if (!notas.value.trim()) return alert("Agrega detalles.");
+            if(!appData.historial) appData.historial = [];
+            appData.historial.unshift({
+                fecha: obtenerHoraYFecha(),
+                agua: appData.agua,
+                luzDepto: appData.luzDepto,
+                luzComun: appData.luzComun,
+                notes: notas.value.trim()
+            });
+            notas.value = "";
+            set(dbRef, appData).then(() => alert("Variación guardada en el historial."));
+        };
+
+        navegarA('inicio');
+    </script>
+</body>
+</html>
